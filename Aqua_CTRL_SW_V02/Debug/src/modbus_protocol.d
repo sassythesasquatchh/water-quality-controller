@@ -45,9 +45,6 @@ src/modbus_protocol.o: ../src/modbus_protocol.c ../src/modbus_protocol.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/bsp_api.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra_cfg/fsp_cfg/r_ioport_cfg.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra_cfg/fsp_cfg/bsp/bsp_pin_cfg.h \
- C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/instances/r_crc.h \
- C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra_cfg/fsp_cfg/r_crc_cfg.h \
- C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/r_crc_api.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/instances/r_agt.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra_cfg/fsp_cfg/r_agt_cfg.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/r_timer_api.h \
@@ -108,9 +105,6 @@ C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-contro
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/bsp_api.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra_cfg/fsp_cfg/r_ioport_cfg.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra_cfg/fsp_cfg/bsp/bsp_pin_cfg.h:
-C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/instances/r_crc.h:
-C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra_cfg/fsp_cfg/r_crc_cfg.h:
-C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/r_crc_api.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/instances/r_agt.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra_cfg/fsp_cfg/r_agt_cfg.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/r_timer_api.h:

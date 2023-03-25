@@ -31,21 +31,11 @@ void hal_entry(void)
 
     volatile uint16_t readings[5] = {0};
 
-//    volatile bool takingActionPH = false;
-//    volatile bool takingActionCond = false;
-//
-//    volatile bool takeActionPH = false;
-//    volatile bool takeActionCond = false;
-//
-//    volatile bool pumpOnCond = false;
-//    volatile bool pumpOnPH = false;
-
     volatile bool err_arr[16] = {0};
 
     volatile bool firstPass = true;
 
     volatile bool hmi_display_cond = false; // 0 for pH, 1 for conductivity
-
 
     volatile uint64_t ADCTimer=0;
     volatile uint64_t displayToggleTimer = 0;

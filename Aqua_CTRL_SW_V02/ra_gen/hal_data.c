@@ -6,16 +6,6 @@
 #define ADC_TRIGGER_ADC0_B      ADC_TRIGGER_SYNC_ELC
 #define ADC_TRIGGER_ADC1        ADC_TRIGGER_SYNC_ELC
 #define ADC_TRIGGER_ADC1_B      ADC_TRIGGER_SYNC_ELC
-crc_instance_ctrl_t g_crc0_ctrl;
-const crc_cfg_t g_crc0_cfg =
-{ .polynomial = CRC_POLYNOMIAL_CRC_16,
-  .bit_order = CRC_BIT_ORDER_LMS_MSB,
-  .snoop_address = CRC_SNOOP_ADDRESS_NONE,
-  .p_extend = NULL, };
-
-/* Instance structure to use this module. */
-const crc_instance_t g_crc0 =
-{ .p_ctrl = &g_crc0_ctrl, .p_cfg = &g_crc0_cfg, .p_api = &g_crc_on_crc };
 agt_instance_ctrl_t g_modbus_timer_ctrl;
 const agt_extended_cfg_t g_modbus_timer_extend =
 { .count_source = AGT_CLOCK_PCLKB,
@@ -29,7 +19,7 @@ const agt_extended_cfg_t g_modbus_timer_extend =
 const timer_cfg_t g_modbus_timer_cfg =
 { .mode = TIMER_MODE_ONE_SHOT,
 /* Actual period: 0.001872 seconds. Actual duty: 50%. */.period_counts = (uint32_t) 0xb6d0,
-  .duty_cycle_counts = 0x5b68, .source_div = (timer_source_div_t) 1, .channel = 0, .p_callback = NULL,
+  .duty_cycle_counts = 0x5b68, .source_div = (timer_source_div_t) 1, .channel = 0, .p_callback = modbus_timer_cb,
   /** If NULL then do not add & */
 #if defined(NULL)
     .p_context           = NULL,
@@ -37,7 +27,7 @@ const timer_cfg_t g_modbus_timer_cfg =
   .p_context = &NULL,
 #endif
   .p_extend = &g_modbus_timer_extend,
-  .cycle_end_ipl = (BSP_IRQ_DISABLED),
+  .cycle_end_ipl = (2),
 #if defined(VECTOR_NUMBER_AGT0_INT)
     .cycle_end_irq       = VECTOR_NUMBER_AGT0_INT,
 #else
@@ -78,7 +68,7 @@ const sci_uart_extended_cfg_t modbus_uart_cfg_extend =
 /** UART interface configuration */
 const uart_cfg_t modbus_uart_cfg =
 { .channel = 3, .data_bits = UART_DATA_BITS_8, .parity = UART_PARITY_OFF, .stop_bits = UART_STOP_BITS_1, .p_callback =
-          NULL,
+          modbus_uart_cb,
   .p_context = NULL, .p_extend = &modbus_uart_cfg_extend,
 #define RA_NOT_DEFINED (1)
 #if (RA_NOT_DEFINED == RA_NOT_DEFINED)

@@ -275,9 +275,6 @@ FSP Configuration
     Pin Output Support: Disabled
     Pin Input Support: Disabled
     
-  Module "CRC (r_crc)"
-    Parameter Checking: Default (BSP)
-    
   HAL
     Instance "g_ioport I/O Port (r_ioport)"
       Name: g_ioport
@@ -418,7 +415,7 @@ FSP Configuration
       Extra: RS-485: DE Pin Polarity: Active High
       Extra: RS-485: DE Port Number: Disabled
       Extra: RS-485: DE Pin Number: Disabled
-      Interrupts: Callback: NULL
+      Interrupts: Callback: modbus_uart_cb
       Interrupts: Receive Interrupt Priority: Priority 12
       Interrupts: Transmit Data Empty Interrupt Priority: Priority 12
       Interrupts: Transmit End Interrupt Priority: Priority 12
@@ -439,12 +436,6 @@ FSP Configuration
       Input: Input Filter: No Filter
       Input: Enable Pin: Enable Pin Not Used
       Input: Trigger Edge: Trigger Edge Rising
-      Interrupts: Callback: NULL
-      Interrupts: Underflow Interrupt Priority: Disabled
-      
-    Instance "g_crc0 CRC (r_crc)"
-      Name: g_crc0
-      CRC Polynomial: CRC-16
-      Bit Order: MSB
-      Snoop Address: NONE
+      Interrupts: Callback: modbus_timer_cb
+      Interrupts: Underflow Interrupt Priority: Priority 2
       

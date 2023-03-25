@@ -21,7 +21,6 @@
 #define ILLEGAL_DATA_ADDRESS 0x02
 #define ILLEGAL_DATA_VALUE 0x03
 
-
 void read_input_registers();
 void read_holding_registers();
 void send_modbus(int);
@@ -30,7 +29,6 @@ void handle_modbus_message();
 void reset_timer(uint16_t);
 void modbus_uart_cb(uart_callback_args_t *);
 void modbus_timer_cb(timer_callback_args_t*);
-
 
 extern volatile uint16_t holding_registers[2];
 extern volatile uint16_t input_registers[2];

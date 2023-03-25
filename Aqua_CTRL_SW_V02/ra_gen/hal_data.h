@@ -4,8 +4,6 @@
 #include <stdint.h>
 #include "bsp_api.h"
 #include "common_data.h"
-#include "r_crc.h"
-#include "r_crc_api.h"
 #include "r_agt.h"
 #include "r_timer_api.h"
 #include "r_sci_uart.h"
@@ -15,9 +13,6 @@
 #include "r_adc.h"
 #include "r_adc_api.h"
 FSP_HEADER
-extern const crc_instance_t g_crc0;
-extern crc_instance_ctrl_t g_crc0_ctrl;
-extern const crc_cfg_t g_crc0_cfg;
 /** AGT Timer Instance */
 extern const timer_instance_t g_modbus_timer;
 
@@ -25,8 +20,8 @@ extern const timer_instance_t g_modbus_timer;
 extern agt_instance_ctrl_t g_modbus_timer_ctrl;
 extern const timer_cfg_t g_modbus_timer_cfg;
 
-#ifndef NULL
-void NULL(timer_callback_args_t *p_args);
+#ifndef modbus_timer_cb
+void modbus_timer_cb(timer_callback_args_t *p_args);
 #endif
 /** UART on SCI Instance. */
 extern const uart_instance_t modbus_uart;
@@ -36,8 +31,8 @@ extern sci_uart_instance_ctrl_t modbus_uart_ctrl;
 extern const uart_cfg_t modbus_uart_cfg;
 extern const sci_uart_extended_cfg_t modbus_uart_cfg_extend;
 
-#ifndef NULL
-void NULL(uart_callback_args_t *p_args);
+#ifndef modbus_uart_cb
+void modbus_uart_cb(uart_callback_args_t *p_args);
 #endif
 /** UART on SCI Instance. */
 extern const uart_instance_t g_uart0;

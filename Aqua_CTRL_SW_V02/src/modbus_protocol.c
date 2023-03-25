@@ -13,7 +13,6 @@
 volatile bool g_char_interval_exceeded = false;
 volatile bool g_modbus_msg_rcvd = false;
 
-
 volatile uint8_t buffer[DATA_LENGTH]={RESET_VALUE};
 
 volatile uint16_t g_index = 0;
@@ -42,7 +41,6 @@ void modbus_timer_cb(timer_callback_args_t* p_args)
             g_index = 0;
             g_modbus_msg_rcvd = true;
 
-//            handle_modbus_message();
         }
         else{
             g_char_interval_exceeded = true;
@@ -116,9 +114,9 @@ void modbus_exception (uint8_t exception_code, uint8_t function_code)
 
 void send_modbus(int length)
 {
-    uint16_t crc = crc16(modbus_tx_buffer, length);
-    modbus_tx_buffer[length] = crc&0xff;
-    modbus_tx_buffer[length+1] = (crc>>8)&0xff;
+    uint16_t crc = crc16((uint8_t*)modbus_tx_buffer, length);
+    modbus_tx_buffer[length] = (uint8_t) crc&0xff;
+    modbus_tx_buffer[length+1] = (uint8_t)(crc>>8)&0xff;
     R_SCI_UART_Write(&modbus_uart_ctrl, modbus_tx_buffer, length + 2);
     memset((uint8_t*)modbus_tx_buffer, RESET_VALUE, DATA_LENGTH); // Clear transmit buffer of sent message
     memset((uint8_t*)modbus_rx_buffer, RESET_VALUE, DATA_LENGTH); // Clear modbus receive buffer of processed message
@@ -126,14 +124,14 @@ void send_modbus(int length)
 
 void read_input_registers()
 {
-    uint16_t start_address = ((modbus_rx_buffer[2]<<8)|modbus_rx_buffer[3]);
-    uint16_t num_registers = ((modbus_rx_buffer[4]<<8)|modbus_rx_buffer[5]);
+    uint16_t start_address = (uint16_t)((modbus_rx_buffer[2]<<8)|modbus_rx_buffer[3]);
+    uint16_t num_registers = (uint16_t)((modbus_rx_buffer[4]<<8)|modbus_rx_buffer[5]);
     if (num_registers<1 || num_registers > 125)
     {
         modbus_exception(ILLEGAL_DATA_VALUE, modbus_rx_buffer[1]);
     }
 
-    uint16_t end_address = start_address + num_registers - 1;
+    uint16_t end_address = (uint16_t)(start_address + num_registers - 1);
     if (end_address>2)
     {
         modbus_exception(ILLEGAL_DATA_ADDRESS, modbus_rx_buffer[1]);
@@ -141,12 +139,12 @@ void read_input_registers()
 
     modbus_tx_buffer[0] = SLAVE_ID;
     modbus_tx_buffer[1] = modbus_rx_buffer[1];
-    modbus_tx_buffer[2] = num_registers*2;
+    modbus_tx_buffer[2] = (uint8_t) num_registers*2;
     int tx_index = 3;
     for (int i = 0; i<num_registers; i++)
     {
-        modbus_tx_buffer[tx_index++]= (input_registers[start_address]>>8)&0xff;
-        modbus_tx_buffer[tx_index++]= (input_registers[start_address])&0xff;
+        modbus_tx_buffer[tx_index++]= (uint8_t)(input_registers[start_address]>>8)&0xff;
+        modbus_tx_buffer[tx_index++]= (uint8_t)(input_registers[start_address])&0xff;
         start_address++;
     }
     send_modbus(tx_index);
@@ -154,14 +152,14 @@ void read_input_registers()
 
 void read_holding_registers()
 {
-    uint16_t start_address = ((modbus_rx_buffer[2]<<8)|modbus_rx_buffer[3]);
-    uint16_t num_registers = ((modbus_rx_buffer[4]<<8)|modbus_rx_buffer[5]);
+    uint16_t start_address = (uint16_t)((modbus_rx_buffer[2]<<8)|modbus_rx_buffer[3]);
+    uint16_t num_registers = (uint16_t)((modbus_rx_buffer[4]<<8)|modbus_rx_buffer[5]);
     if (num_registers<1 || num_registers > 125)
     {
         modbus_exception(ILLEGAL_DATA_VALUE, modbus_rx_buffer[1]);
     }
 
-    uint16_t end_address = start_address + num_registers - 1;
+    uint16_t end_address = (uint16_t)(start_address + num_registers - 1);
     if (end_address>1)
     {
         modbus_exception(ILLEGAL_DATA_ADDRESS, modbus_rx_buffer[1]);
@@ -169,12 +167,12 @@ void read_holding_registers()
 
     modbus_tx_buffer[0] = SLAVE_ID;
     modbus_tx_buffer[1] = modbus_rx_buffer[1];
-    modbus_tx_buffer[2] = num_registers*2;
+    modbus_tx_buffer[2] = (uint8_t)num_registers*2;
     int tx_index = 3;
     for (int i = 0; i<num_registers; i++)
     {
-        modbus_tx_buffer[tx_index++]= (holding_registers[start_address]>>8)&0xff;
-        modbus_tx_buffer[tx_index++]= (holding_registers[start_address])&0xff;
+        modbus_tx_buffer[tx_index++]= (uint8_t)(holding_registers[start_address]>>8)&0xff;
+        modbus_tx_buffer[tx_index++]= (uint8_t)(holding_registers[start_address])&0xff;
         start_address++;
     }
     send_modbus(tx_index);

@@ -183,10 +183,6 @@
       <description>Asynchronous General Purpose Timer</description>
       <originalPack>Renesas.RA.4.2.0.pack</originalPack>
     </component>
-    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_crc" variant="" vendor="Renesas" version="4.2.0">
-      <description>Cyclic Redundancy Check</description>
-      <originalPack>Renesas.RA.4.2.0.pack</originalPack>
-    </component>
     <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_gpt" variant="" vendor="Renesas" version="4.2.0">
       <description>General PWM Timer</description>
       <originalPack>Renesas.RA.4.2.0.pack</originalPack>
@@ -342,7 +338,7 @@
       <property id="module.driver.uart.rs485.de_polarity" value="module.driver.uart.rs485.de_polarity.high"/>
       <property id="module.driver.uart.rs485.de_port_number" value="module.driver.uart.rs485.de_port_number.PORT_DISABLE"/>
       <property id="module.driver.uart.rs485.de_pin_number" value="module.driver.uart.rs485.de_pin_number.PIN_DISABLE"/>
-      <property id="module.driver.uart.callback" value="NULL"/>
+      <property id="module.driver.uart.callback" value="modbus_uart_cb"/>
       <property id="module.driver.uart.rxi_ipl" value="board.icu.common.irq.priority12"/>
       <property id="module.driver.uart.txi_ipl" value="board.icu.common.irq.priority12"/>
       <property id="module.driver.uart.tei_ipl" value="board.icu.common.irq.priority12"/>
@@ -363,14 +359,8 @@
       <property id="module.driver.timer.agtio_filter" value="module.driver.timer.agtio_filter.agtio_filter_none"/>
       <property id="module.driver.timer.enable_pin" value="module.driver.timer.enable_pin.enable_pin_not_used"/>
       <property id="module.driver.timer.trigger_edge" value="module.driver.timer.trigger_edge.trigger_edge_rising"/>
-      <property id="module.driver.timer.p_callback" value="NULL"/>
-      <property id="module.driver.timer.ipl" value="_disabled"/>
-    </module>
-    <module id="module.driver.crc_on_crc.842596907">
-      <property id="module.driver.crc.name" value="g_crc0"/>
-      <property id="module.driver.crc.crc_polynomial" value="module.driver.crc.crc_polynomial.gps_crc_16"/>
-      <property id="module.driver.crc.crc_bit_order" value="module.driver.crc.crc_bit_order.lms_msb"/>
-      <property id="module.driver.crc.snoop_address" value="module.driver.crc.snoop_address.no_address"/>
+      <property id="module.driver.timer.p_callback" value="modbus_timer_cb"/>
+      <property id="module.driver.timer.ipl" value="board.icu.common.irq.priority2"/>
     </module>
     <context id="_hal.0">
       <stack module="module.driver.ioport_on_ioport.0"/>
@@ -379,16 +369,12 @@
       <stack module="module.driver.uart_on_sci_uart.1664167997"/>
       <stack module="module.driver.uart_on_sci_uart.1605960399"/>
       <stack module="module.driver.timer_on_agt.1554037125"/>
-      <stack module="module.driver.crc_on_crc.842596907"/>
     </context>
     <config id="config.driver.ioport">
       <property id="config.driver.ioport.checking" value="config.driver.ioport.checking.system"/>
     </config>
     <config id="config.driver.adc">
       <property id="config.driver.adc.param_checking_enable" value="config.driver.adc.param_checking_enable.bsp"/>
-    </config>
-    <config id="config.driver.crc">
-      <property id="config.driver.crc.checking" value="config.driver.crc.checking.system"/>
     </config>
     <config id="config.driver.agt">
       <property id="config.driver.agt.param_checking_enable" value="config.driver.agt.param_checking_enable.bsp"/>
