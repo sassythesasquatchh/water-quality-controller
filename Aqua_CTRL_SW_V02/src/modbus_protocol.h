@@ -10,6 +10,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "hal_data.h"
 
 #define CHARACTER_TIMEOUT 750
 #define FRAME_DELAY 1750
@@ -19,6 +20,7 @@
 #define ILLEGAL_FUNCTION 0x01
 #define ILLEGAL_DATA_ADDRESS 0x02
 #define ILLEGAL_DATA_VALUE 0x03
+
 
 void read_input_registers();
 void read_holding_registers();
@@ -32,8 +34,8 @@ void modbus_timer_cb(timer_callback_args_t*);
 extern volatile uint8_t modbus_rx_buffer[20];
 extern volatile uint8_t modbus_tx_buffer[20];
 
-extern static uint16_t holding_registers[2];
-extern static uint16_t input_registers[2];
+extern volatile uint16_t holding_registers[2];
+extern volatile uint16_t input_registers[2];
 
 extern bool g_modbus_msg_rcvd;
 

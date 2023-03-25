@@ -22,8 +22,8 @@ volatile uint16_t g_index = 0;
 volatile uint8_t modbus_rx_buffer[DATA_LENGTH]= {RESET_VALUE};
 volatile uint8_t modbus_tx_buffer[DATA_LENGTH] = {RESET_VALUE};
 
-static uint16_t holding_registers[2]={RESET_VALUE};
-static uint16_t input_registers[2]={RESET_VALUE};
+volatile uint16_t holding_registers[2]={RESET_VALUE};
+volatile uint16_t input_registers[2]={RESET_VALUE};
 
 
 void modbus_timer_cb(timer_callback_args_t* p_args)

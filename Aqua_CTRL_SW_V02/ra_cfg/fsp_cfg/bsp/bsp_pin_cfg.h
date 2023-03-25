@@ -12,8 +12,8 @@ FSP_HEADER
 #define DO_BCD_B (BSP_IO_PORT_01_PIN_03)
 #define DO_BCD_C (BSP_IO_PORT_01_PIN_04)
 #define DO_BCD_D (BSP_IO_PORT_01_PIN_05)
-#define DO_V_CONDUCTIV_PUMP_ON (BSP_IO_PORT_01_PIN_10)
-#define DO_V_PH_PUMP_ON (BSP_IO_PORT_01_PIN_11)
+#define DO_CONDUCTIVITY_PUMP (BSP_IO_PORT_01_PIN_10)
+#define DO_PH_PUMP (BSP_IO_PORT_01_PIN_11)
 #define DI_UART_RX_ESP32 (BSP_IO_PORT_03_PIN_01)
 #define DO_UART_TX_ESP32 (BSP_IO_PORT_03_PIN_02)
 #define DO_ESP32_EN (BSP_IO_PORT_03_PIN_03)
@@ -34,7 +34,7 @@ FSP_HEADER
 #define AI_24V0 (BSP_IO_PORT_05_PIN_02)
 #define AI_I_SENSE_CONDUTIV_SENSOR (BSP_IO_PORT_05_PIN_03)
 #define AI_V_CONDUCTIV_SENSOR (BSP_IO_PORT_05_PIN_04)
-#define DO_CONDUCTIV_PUMP_ON_LED (BSP_IO_PORT_07_PIN_00) /* switches on LED, indicating Conductiv. Pump is on */
+#define DO_CONDUCTIVITY_PUMP_ON_LED (BSP_IO_PORT_07_PIN_00) /* switches on LED, indicating Conductiv. Pump is on */
 #define DO_PH_SENSOR_DISPLAY_ON (BSP_IO_PORT_07_PIN_01) /* switches on LED, indicating PH Sensor is switched On */
 #define DO_PH_PUMP_ON_LED (BSP_IO_PORT_07_PIN_02) /* switches on LED, indicating PH Pump is on */
 extern const ioport_cfg_t g_bsp_pin_cfg; /* R7FA6M5BG3CFB.pincfg */

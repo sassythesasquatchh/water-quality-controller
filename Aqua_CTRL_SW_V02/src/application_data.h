@@ -15,10 +15,36 @@
 #define M 1000000
 #define K 1000
 
-uint16_t analog_sensor_high_threshold = 2484; // 2000 mV converted to 12 bit ADC reading
-uint16_t analog_sensor_low_threshold = 496; // 400 mV converted to 12 bit ADC reading
-uint16_t analog_mains_high_threshold = 3644; // Represents mains voltage rising above 26V
-uint16_t analog_mains_low_threshold = 1281; // Represents mains voltage dropping below 12V
+#define PH_READING_ADC 0x00
+#define CONDUCTIVITY_READING_ADC 0x01
+#define PH_READING_CONVERTED 0x02
+#define CONDUCTIVITY_READING_CONVERTED 0x03
+#define SUPPLY_VOLTAGE_DIAGNOSTIC_READING 0x04
+
+extern volatile uint64_t micros;
+
+struct AppConfig
+{
+    uint32_t pump_on_interval_ph;
+    uint32_t pump_off_interval_ph;
+    uint32_t pump_on_interval_cond;
+    uint32_t pump_off_interval_cond;
+    uint16_t ph_setpoint_raw;
+    uint16_t ph_low_warning_raw;
+    uint16_t ph_high_warning_raw;
+    uint16_t conductivity_setpoint_raw;
+    uint16_t conductivity_low_warning_raw;
+    uint16_t conductivity_high_warning_raw;
+
+};
+
+void configure_app(struct AppConfig*);
+
+
+const uint16_t analog_sensor_high_threshold = 2484; // 2000 mV converted to 12 bit ADC reading
+const uint16_t analog_sensor_low_threshold = 496; // 400 mV converted to 12 bit ADC reading
+const uint16_t analog_mains_high_threshold = 3644; // Represents mains voltage rising above 26V
+const uint16_t analog_mains_low_threshold = 1281; // Represents mains voltage dropping below 12V
 
 uint16_t ph_setpoint = 70; // In pH*10 to avoid decimals (eg. write 70 for 7.0 pH)
 uint16_t ph_low_warning = 68; // In pH*10 to avoid decimals (eg. write 70 for 7.0 pH)
@@ -40,22 +66,12 @@ uint32_t dosing_period = 240*K; //Enter dosing period in seconds
 uint8_t ph_pump_duty_cycle = 25; //Enter duty cycle for pH pump as percentage of dosing period
 uint8_t cond_pump_duty_cycle = 50; //Enter duty cycle for conductivity pump as percentage of dosing period
 
-volatile uint32_t pump_on_interval_ph = (uint32_t) ph_pump_duty_cycle*dosing_period/100;
-volatile uint32_t pump_off_interval_ph = (uint32_t) (100-ph_pump_duty_cycle)*dosing_period/100;
-volatile uint32_t pump_on_interval_cond = (uint32_t) cond_pump_duty_cycle*dosing_period/100;
-volatile uint32_t pump_off_interval_cond = (uint32_t) (100-cond_pump_duty_cycle)*dosing_period/100;
-static uint32_t adc_scan_interval = 10*M; // Interval between ADC scans in seconds
-static uint32_t sensor_display_toggle_interval = 5*M; // Time period between automatic toggling from pH to conductivity for HMI display
-static uint32_t hmi_interval = 5*K; // In milliseconds
-static uint32_t uart_interval = 10*K; // In milliseconds
 
-uint16_t ph_setpoint_raw = convert_ph_to_adc(ph_setpoint-ph_hysteresis);
-uint16_t ph_low_warning_raw = convert_ph_to_adc(ph_low_warning-ph_hysteresis);
-uint16_t ph_high_warning_raw = convert_ph_to_adc(ph_high_warning-ph_hysteresis);
+uint32_t sensor_display_toggle_interval = 5*M; // Time period between automatic toggling from pH to conductivity for HMI display
+uint32_t hmi_interval = 5*K; // In milliseconds
+uint32_t uart_interval = 10*K; // In milliseconds
+uint32_t adc_scan_interval = 10*M; // In seconds
 
-uint16_t conductivity_setpoint_raw = convert_cond_to_adc(conductivity_setpoint-conductivity_hysteresis);
-uint16_t conductivity_low_warning_raw = convert_ph_to_adc(conductivity_low_warning-conductivity_hysteresis);
-uint16_t conductivity_high_warning_raw = convert_ph_to_adc(conductivity_high_warning-conductivity_hysteresis);
 
 
 
