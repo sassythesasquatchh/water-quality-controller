@@ -95,7 +95,7 @@ all: Aqua_CTRL_SW_V02.elf secondary-outputs
 
 # Tool invocations
 Aqua_CTRL_SW_V02.elf: $(OBJS) $(USER_OBJS) $(LINKER_SCRIPT)
-	$(file > Aqua_CTRL_SW_V02.elf.in,-mcpu=cortex-m33 -mthumb -mfloat-abi=hard -mfpu=fpv5-sp-d16 -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wunused -Wuninitialized -Wall -Wextra -Wmissing-declarations -Wconversion -Wpointer-arith -Wshadow -Wlogical-op -Waggregate-return -Wfloat-equal  -g -T "fsp.ld" -Xlinker --gc-sections -L "C:\\Users\\patri\\Downloads\\amjad_dosing _controller_hmi (3)\\Aqua_CTRL_SW_V02/script" -Wl,-Map,"Aqua_CTRL_SW_V02.map" --specs=nano.specs --specs=rdimon.specs -o "Aqua_CTRL_SW_V02.elf" -Wl,--start-group $(OBJS) $(USER_OBJS) $(LIBS) -Wl,--end-group)
+	$(file > Aqua_CTRL_SW_V02.elf.in,-mcpu=cortex-m33 -mthumb -mfloat-abi=hard -mfpu=fpv5-sp-d16 -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wunused -Wuninitialized -Wall -Wextra -Wmissing-declarations -Wconversion -Wpointer-arith -Wshadow -Wlogical-op -Waggregate-return -Wfloat-equal  -g -T "fsp.ld" -Xlinker --gc-sections -L "C:\\Users\\patri\\OneDrive\\Patricks OneDrive Share\\Documents\\water-quality-controller\\water-quality-controller\\Aqua_CTRL_SW_V02/script" -Wl,-Map,"Aqua_CTRL_SW_V02.map" --specs=nano.specs --specs=rdimon.specs -o "Aqua_CTRL_SW_V02.elf" -Wl,--start-group $(OBJS) $(USER_OBJS) $(LIBS) -Wl,--end-group)
 	@echo Building target: $@ && arm-none-eabi-gcc @"Aqua_CTRL_SW_V02.elf.in"
 
 Aqua_CTRL_SW_V02.srec: Aqua_CTRL_SW_V02.elf
