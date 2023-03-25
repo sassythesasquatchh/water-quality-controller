@@ -26,7 +26,6 @@ void count_micros (timer_callback_args_t *p_args)
  **********************************************************************************************************************/
 void hal_entry(void)
 {
-
     struct AppConfig configs;
     configure_app(&configs);
 

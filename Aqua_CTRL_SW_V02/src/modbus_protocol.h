@@ -31,12 +31,10 @@ void reset_timer(uint16_t);
 void modbus_uart_cb(uart_callback_args_t *);
 void modbus_timer_cb(timer_callback_args_t*);
 
-extern volatile uint8_t modbus_rx_buffer[20];
-extern volatile uint8_t modbus_tx_buffer[20];
 
 extern volatile uint16_t holding_registers[2];
 extern volatile uint16_t input_registers[2];
 
-extern bool g_modbus_msg_rcvd;
+extern volatile bool g_modbus_msg_rcvd;
 
 #endif

@@ -10,11 +10,10 @@
 #include <stdbool.h>
 #include "modbus_crc.h"
 
-extern g_char_interval_exceeded;
-extern g_msg_interval_exceeded;
-bool g_modbus_msg_rcvd = false;
+volatile bool g_char_interval_exceeded = false;
+volatile bool g_modbus_msg_rcvd = false;
 
-volatile bool g_at_least_one_char_rcvd = false;
+
 volatile uint8_t buffer[DATA_LENGTH]={RESET_VALUE};
 
 volatile uint16_t g_index = 0;
@@ -34,7 +33,7 @@ void modbus_timer_cb(timer_callback_args_t* p_args)
         {
             g_char_interval_exceeded = false;
 
-            for(int i; i<=g_index; i++)
+            for(int i = 0; i<=g_index; i++)
             {
                 modbus_rx_buffer[i]=buffer[i];
             }
@@ -84,7 +83,7 @@ void reset_timer(uint16_t new_period)
 
 void handle_modbus_message()
 {
-    uint16_t crc = crc16(modbus_rx_buffer, g_index-2);
+    uint16_t crc = crc16((uint8_t*)modbus_rx_buffer, g_index-2);
     if (crc == (modbus_rx_buffer[g_index] << 8 | modbus_rx_buffer[g_index-1])) //If CRC matches
     {
         if (modbus_rx_buffer[0]==SLAVE_ID) //If message is addressed to this device
@@ -98,7 +97,7 @@ void handle_modbus_message()
                     read_input_registers();
                     break;
                 case 0x10:
-                    write_multiple_registers();
+                    //write_multiple_registers();
                     break;
                 default:
                     modbus_exception(ILLEGAL_FUNCTION, modbus_rx_buffer[1]);
