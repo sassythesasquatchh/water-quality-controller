@@ -59,7 +59,7 @@ src/hal_entry.o: ../src/hal_entry.c \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/r_adc_api.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/r_elc_api.h \
  ../src/hmi_control.h ../src/control_utils.h ../src/application_data.h \
- ../src/dosing_control.h
+ ../src/dosing_control.h ../src/modbus_protocol.h
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/src/modbus_protocol.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra_gen/hal_data.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/bsp_api.h:
@@ -123,3 +123,4 @@ C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-contro
 ../src/control_utils.h:
 ../src/application_data.h:
 ../src/dosing_control.h:
+../src/modbus_protocol.h:

@@ -21,6 +21,9 @@
 #define ILLEGAL_DATA_ADDRESS 0x02
 #define ILLEGAL_DATA_VALUE 0x03
 
+#define PH_READING_INDEX 0x01
+#define CONDUCTIVITY_READING_INDEX 0x02
+
 void read_input_registers();
 void read_holding_registers();
 void send_modbus(int);
@@ -31,7 +34,7 @@ void modbus_uart_cb(uart_callback_args_t *);
 void modbus_timer_cb(timer_callback_args_t*);
 
 extern volatile uint16_t holding_registers[2];
-extern volatile uint16_t input_registers[2];
+extern volatile uint16_t input_registers[3];
 
 extern volatile bool g_modbus_msg_rcvd;
 

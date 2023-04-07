@@ -58,7 +58,7 @@ src/dosing_control.o: ../src/dosing_control.c ../src/dosing_control.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra_cfg/fsp_cfg/r_adc_cfg.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/r_adc_api.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/r_elc_api.h \
- ../src/control_utils.h
+ ../src/control_utils.h ../src/modbus_protocol.h
 ../src/dosing_control.h:
 ../src/application_data.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra_gen/hal_data.h:
@@ -120,3 +120,4 @@ C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-contro
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/r_adc_api.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/Aqua_CTRL_SW_V02/ra/fsp/inc/api/r_elc_api.h:
 ../src/control_utils.h:
+../src/modbus_protocol.h:

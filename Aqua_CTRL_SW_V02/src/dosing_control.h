@@ -11,6 +11,9 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "application_data.h"
+#include "modbus_protocol.h"
+
+
 
 //Error codes to send
 #define PH_SENSOR_FAULT 0x00
@@ -26,7 +29,7 @@
 #define SUPPLY_VOLTAGE_LOW 0x0A
 #define SUPPLY_VOLTAGE_HIGH 0x0B
 
-void read_sensors(struct AppConfig *, bool[], uint16_t[]);
+void read_sensors(struct AppConfig *, bool[]);
 void handle_pumps(struct AppConfig *);
 
 #endif /* DOSING_CONTROL_H_ */

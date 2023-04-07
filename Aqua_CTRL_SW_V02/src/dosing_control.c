@@ -6,7 +6,6 @@
  */
 
 #include "dosing_control.h"
-#include "application_data.h"
 
 static volatile bool takingActionPH = false;
 static volatile bool takingActionCond = false;
@@ -22,7 +21,7 @@ static volatile uint64_t onTimerPH = 0;
 static volatile uint64_t offTimerCond = 0;
 static volatile uint64_t onTimerCond = 0;
 
-void read_sensors(struct AppConfig *configs, bool err_arr[], uint16_t readings[])
+void read_sensors(struct AppConfig *configs, bool err_arr[])
 {
 
     uint16_t ph_reading_adc = 0;
@@ -60,8 +59,11 @@ void read_sensors(struct AppConfig *configs, bool err_arr[], uint16_t readings[]
     takeActionPH = ph_reading_adc <= configs->ph_setpoint_raw;
     takeActionCond = conductivity_reading_adc <= configs->conductivity_setpoint_raw;
 
-    readings[PH_READING_CONVERTED] = convert_adc_to_ph(ph_reading_adc);
-    readings[CONDUCTIVITY_READING_CONVERTED] = convert_adc_to_cond(conductivity_reading_adc);
+//    readings[PH_READING_CONVERTED] = convert_adc_to_ph(ph_reading_adc);
+//    readings[CONDUCTIVITY_READING_CONVERTED] = convert_adc_to_cond(conductivity_reading_adc);
+
+    input_registers[PH_READING_INDEX] = convert_adc_to_ph(ph_reading_adc);
+    input_registers[CONDUCTIVITY_READING_INDEX] = convert_adc_to_cond(conductivity_reading_adc);
 
 }
 

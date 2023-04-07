@@ -29,8 +29,6 @@ void hal_entry(void)
     struct AppConfig configs;
     configure_app(&configs);
 
-    volatile uint16_t readings[5] = {0};
-
     volatile bool err_arr[16] = {0};
 
     volatile bool firstPass = true;
@@ -57,7 +55,7 @@ void hal_entry(void)
 
         if ((micros - ADCTimer >= adc_scan_interval) || firstPass){
 
-            read_sensors(&configs, (bool*)err_arr, (uint16_t*)readings);
+            read_sensors(&configs, (bool*)err_arr);
 
             firstPass = false;
             ADCTimer = micros;
@@ -76,10 +74,10 @@ void hal_entry(void)
         if (micros - hmiTimer > hmi_interval){
            if (hmi_display_cond)
            {
-               handle_hmi(readings[CONDUCTIVITY_READING_CONVERTED]);
+               handle_hmi(input_registers[CONDUCTIVITY_READING_INDEX]);
            }else
            {
-               handle_hmi(readings[PH_READING_CONVERTED]);
+               handle_hmi(input_registers[PH_READING_INDEX]);
            }
            hmiTimer = micros;
         }
