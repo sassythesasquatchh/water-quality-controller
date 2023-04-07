@@ -26,6 +26,7 @@
 
 void read_input_registers();
 void read_holding_registers();
+void write_holding_registers ();
 void send_modbus(int);
 void modbus_exception (uint8_t, uint8_t);
 void handle_modbus_message();

@@ -95,7 +95,7 @@ void handle_modbus_message()
                     read_input_registers();
                     break;
                 case 0x10:
-                    //write_multiple_registers();
+                    write_holding_registers();
                     break;
                 default:
                     modbus_exception(ILLEGAL_FUNCTION, modbus_rx_buffer[1]);
@@ -178,6 +178,49 @@ void read_holding_registers()
         start_address++;
     }
     send_modbus(tx_index);
+}
+
+void write_holding_registers ()
+{
+    uint16_t startAddr = ((modbus_rx_buffer[2]<<8)|modbus_rx_buffer[3]);  // start Register Address
+
+    uint16_t numRegs = ((modbus_rx_buffer[4]<<8)|modbus_rx_buffer[5]);   // number to registers master has requested
+    if ((numRegs<1)||(numRegs>123))  // maximum no. of Registers as per the PDF
+    {
+        modbus_exception (ILLEGAL_DATA_VALUE, modbus_rx_buffer[1]);  // send an exception
+
+    }
+
+    uint16_t endAddr = startAddr+numRegs-1;  // end Register
+    if (endAddr>4)  // end Register can not be more than 49 as we only have record of 50 Registers in total
+    {
+        modbus_exception(ILLEGAL_DATA_ADDRESS, modbus_rx_buffer[1]);   // send an exception
+
+    }
+
+    /* start saving 16 bit data
+     * Data starts from modbus_rx_buffer[7] and we need to combine 2 bytes together
+     * 16 bit Data = firstByte<<8|secondByte
+     */
+    int indx = 6;  // we need to keep track of index in modbus_rx_buffer
+    for (int i=0; i<numRegs; i++)
+    {
+        holding_registers[startAddr++] = (modbus_rx_buffer[indx++]<<8)|modbus_rx_buffer[indx++];
+    }
+
+    // Prepare Response
+
+    //| SLAVE_ID | FUNCTION_CODE | Start Addr | num of Regs    | CRC     |
+    //| 1 BYTE   |  1 BYTE       |  2 BYTE    | 2 BYTES      | 2 BYTES |
+
+    modbus_tx_buffer[0] = SLAVE_ID;    // slave ID
+    modbus_tx_buffer[1] = modbus_rx_buffer[1];   // function code
+    modbus_tx_buffer[2] = modbus_rx_buffer[2];   // Start Addr HIGH Byte
+    modbus_tx_buffer[3] = modbus_rx_buffer[3];   // Start Addr LOW Byte
+    modbus_tx_buffer[4] = modbus_rx_buffer[4];   // num of Regs HIGH Byte
+    modbus_tx_buffer[5] = modbus_rx_buffer[5];   // num of Regs LOW Byte
+
+    send_modbus(6);  // send data... CRC will be calculated in the function itself
 }
 
 
