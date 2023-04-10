@@ -13,8 +13,6 @@
 #include "application_data.h"
 #include "modbus_protocol.h"
 
-
-
 //Error codes to send
 #define PH_SENSOR_FAULT 0x00
 #define PH_LOW_WARNING 0x01

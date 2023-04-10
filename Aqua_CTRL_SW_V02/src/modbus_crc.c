@@ -8,6 +8,16 @@
 #include "stdint.h"
 #include "modbus_crc.h"
 
+/*
+ * The CRC (cyclic redundancy check) algorithm takes a message, divides it by a fixed polynomial,
+ * and then appends the resulting remainder (i.e., the CRC) to the message.
+ * To check the validity of the message, the receiver performs the same calculation
+ * on the received message and compares the resulting CRC to the one that was appended to the message.
+ *
+ * In the case of CRC 16 for modbus, the polynomial is x^16 + x^15 + x^2 + 1. Omitting the first term
+ * as is standard, the hex representation of the polynomial is 0x8005
+ */
+
 /* Table of CRC values for high-order byte */
 static const uint8_t table_crc_hi[] = {
     0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0,
@@ -68,19 +78,25 @@ static const uint8_t table_crc_lo[] = {
     0x43, 0x83, 0x41, 0x81, 0x80, 0x40
 };
 
+// This code is taken from the modbus standard
+// https://www.modbus.org/docs/Modbus_over_serial_line_V1_02.pdf (pg 42)
+//Note: This function performs the swapping of the high/low CRC bytes internally.
+//The bytes are already swapped in the CRC value that is returned from the function.
+//Therefore the CRC value returned from the function can be directly placed into the message for transmission.
+
 uint16_t crc16(uint8_t *buffer, uint16_t buffer_length)
 {
-    uint8_t crc_hi = 0xFF; /* high CRC byte initialized */
-    uint8_t crc_lo = 0xFF; /* low CRC byte initialized */
-    unsigned int i; /* will index into CRC lookup */
+    uint8_t crc_hi = 0xFF; // initialize high CRC byte to 0xFF
+    uint8_t crc_lo = 0xFF; // initialize low CRC byte to 0xFF
+    unsigned int i; // initialize index variable i
 
-    /* pass through message buffer */
+    // pass through message buffer
     while (buffer_length--) {
-        i = crc_lo ^ *buffer++; /* calculate the CRC  */
-        crc_lo = crc_hi ^ table_crc_hi[i];
-        crc_hi = table_crc_lo[i];
+        i = crc_lo ^ *buffer++; // XOR low CRC byte with current buffer value and store in i, increment buffer pointer
+        crc_lo = crc_hi ^ table_crc_hi[i]; // XOR high CRC byte with table value at index i and store in low CRC byte
+        crc_hi = table_crc_lo[i]; // set high CRC byte to table value at index i
     }
 
-    return (uint16_t)(crc_hi << 8 | crc_lo);
+    return (uint16_t)(crc_hi << 8 | crc_lo); // combine high and low CRC bytes into a single uint16_t value and return
 }
 

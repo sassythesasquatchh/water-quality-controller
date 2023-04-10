@@ -39,15 +39,25 @@ uint32_t adc_scan_interval = 10*M; // In seconds
 
 void configure_app(struct AppConfig *configs)
 {
+    // Calculate the 'on interval' for the pH pump by multiplying the dosing period with the duty cycle as a percentage
     configs->pump_on_interval_ph = (uint32_t) ph_pump_duty_cycle*dosing_period/100;
+    // Calculate the 'off interval' for the pH pump by multiplying the dosing period with the (100% - duty cycle as a percentage)
     configs->pump_off_interval_ph = (uint32_t) (100-ph_pump_duty_cycle)*dosing_period/100;
+    // Calculate the 'on interval' for the conductivity pump by multiplying the dosing period with the duty cycle as a percentage
     configs->pump_on_interval_cond = (uint32_t) cond_pump_duty_cycle*dosing_period/100;
+    // Calculate the 'off interval' for the conductivity pump by multiplying the dosing period with the (100% - duty cycle as a percentage)
     configs->pump_off_interval_cond = (uint32_t) (100-cond_pump_duty_cycle)*dosing_period/100;
+    // Convert the pH setpoint to raw ADC value
     configs->ph_setpoint_raw = convert_ph_to_adc(ph_setpoint-ph_hysteresis);
+    // Convert the pH low warning threshold to raw ADC value
     configs->ph_low_warning_raw = convert_ph_to_adc(ph_low_warning-ph_hysteresis);
+    // Convert the pH high warning threshold to raw ADC value
     configs->ph_high_warning_raw = convert_ph_to_adc(ph_high_warning-ph_hysteresis);
+    // Convert the conductivity setpoint to raw ADC value
     configs->conductivity_setpoint_raw = convert_cond_to_adc(conductivity_setpoint-conductivity_hysteresis);
+    // Convert the conductivity low warning threshold to raw ADC value
     configs->conductivity_low_warning_raw = convert_ph_to_adc(conductivity_low_warning-conductivity_hysteresis);
+    // Convert the conductivity high warning threshold to raw ADC value
     configs->conductivity_high_warning_raw = convert_ph_to_adc(conductivity_high_warning-conductivity_hysteresis);
 }
 
