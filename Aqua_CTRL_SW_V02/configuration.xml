@@ -397,7 +397,7 @@
   </raModuleConfiguration>
   <raPinConfiguration>
     <symbolicName propertyId="p100.symbolic_name" value="DO_PH_SENSOR_ON"/>
-    <symbolicName propertyId="p101.symbolic_name" value="DO_CONDUCTIV_SENSOR_ON"/>
+    <symbolicName propertyId="p101.symbolic_name" value="DO_CONDUCTIVITY_SENSOR_ON"/>
     <symbolicName propertyId="p102.symbolic_name" value="DO_BCD_A"/>
     <symbolicName propertyId="p103.symbolic_name" value="DO_BCD_B"/>
     <symbolicName propertyId="p104.symbolic_name" value="DO_BCD_C"/>

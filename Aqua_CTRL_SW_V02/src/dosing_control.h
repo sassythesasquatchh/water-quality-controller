@@ -29,5 +29,9 @@
 
 void read_sensors(struct AppConfig *, bool[]);
 void handle_pumps(struct AppConfig *);
+void turn_sensors_on();
+void turn_sensors_off();
+
+extern volatile bool sensors_on;
 
 #endif /* DOSING_CONTROL_H_ */

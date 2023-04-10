@@ -37,6 +37,8 @@ uint32_t hmi_interval = 5*K; // In milliseconds
 uint32_t uart_interval = 10*K; // In milliseconds
 uint32_t adc_scan_interval = 10*M; // In seconds
 
+uint32_t sensor_response_time = 5*M; // Upper bound of settling time for the pH sensor, in seconds
+
 void configure_app(struct AppConfig *configs)
 {
     // Calculate the 'on interval' for the pH pump by multiplying the dosing period with the duty cycle as a percentage

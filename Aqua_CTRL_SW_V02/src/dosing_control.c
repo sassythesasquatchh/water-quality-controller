@@ -28,6 +28,8 @@ static volatile uint64_t onTimerPH = 0; // Times the 'on-interval' for the pH pu
 static volatile uint64_t offTimerCond = 0; // Times the 'off-interval' for the conductivity pump
 static volatile uint64_t onTimerCond = 0; // Times the 'off-interval' for the conductivity pump
 
+volatile bool sensors_on = false;
+
 void read_sensors(struct AppConfig *configs, bool err_arr[])
 {
     uint16_t ph_reading_adc = 0; // Initialize variable for storing pH sensor reading from ADC
@@ -53,6 +55,9 @@ void read_sensors(struct AppConfig *configs, bool err_arr[])
     R_ADC_Read(&g_adc0_ctrl, conductivity_sensor_voltage_adc_channel, &conductivity_reading_adc);
     // Read the digitized supply voltage diagnostic reading from ADC
     R_ADC_Read(&g_adc0_ctrl, supply_voltage_adc_channel, &supply_voltage_diagnostic_reading);
+
+    // Turn off the power supply to the pH and conductivity sensors
+    turn_sensors_off();
 
     // Check if pH reading is higher than the high warning threshold and set corresponding error flag
     err_arr[PH_HIGH_WARNING] = ph_reading_adc >= configs->ph_high_warning_raw;
@@ -123,4 +128,20 @@ void handle_pumps(struct AppConfig *configs)
     if (!pumpOnCond && (micros - offTimerCond > configs->pump_off_interval_cond)){
         takingActionCond = false; // Set flag to indicate that it's time to stop taking action with the conductivity pump
     }
+}
+
+void turn_sensors_on()
+{
+    R_IOPORT_PinWrite(&g_ioport_ctrl, DO_PH_SENSOR_ON, BSP_IO_LEVEL_HIGH); // Turn on the pH sensor
+    R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_SENSOR_ON, BSP_IO_LEVEL_HIGH); // Turn on the conductivity sensor
+
+    sensors_on = true;
+}
+
+void turn_sensors_off()
+{
+    R_IOPORT_PinWrite(&g_ioport_ctrl, DO_PH_SENSOR_ON, BSP_IO_LEVEL_LOW); // Turn off the pH sensor
+    R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_SENSOR_ON, BSP_IO_LEVEL_LOW); // Turn off the conductivity sensor
+
+    sensors_on = false;
 }

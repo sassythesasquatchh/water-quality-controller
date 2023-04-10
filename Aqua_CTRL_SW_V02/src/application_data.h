@@ -70,4 +70,6 @@ extern uint32_t hmi_interval;
 extern uint32_t uart_interval;
 extern uint32_t adc_scan_interval;
 
+extern uint32_t sensor_response_time;
+
 #endif /* APPLICATION_DATA_H_ */

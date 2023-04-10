@@ -70,12 +70,21 @@ void hal_entry(void)
     // Enter the main loop
     while (true){
 
+        // Turn the sensors on, if they are not already on and if the time elapsed since the last reading
+        // is greater than or equal to the required interval between readings less the response time
+        // of the pH sensor (pH sensor has a slower response time than the conductivity sensor)
+        if (((micros - ADCTimer) >= (adc_scan_interval - sensor_response_time)) && !sensors_on)
+        {
+            turn_sensors_on();
+        }
+
         // If it's time to read the sensors or if this is the first pass through the loop
+        // FOR DEPLOYMENT REMOVE FIRSTPASS PARAMETER
         if ((micros - ADCTimer >= adc_scan_interval) || firstPass){
             // Call a function to read the sensors and update the configuration settings
             read_sensors(&configs, (bool*)err_arr);
 
-            // Reset the first pass flag
+            // Set the first pass flag to false
             firstPass = false;
             // Set the timer for the next sensor reading
             ADCTimer = micros;
