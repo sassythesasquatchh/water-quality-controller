@@ -319,7 +319,7 @@
       <property id="module.driver.uart.eri_ipl" value="board.icu.common.irq.priority12"/>
     </module>
     <module id="module.driver.uart_on_sci_uart.1605960399">
-      <property id="module.driver.uart.name" value="modbus_uart"/>
+      <property id="module.driver.uart.name" value="g_modbus_uart"/>
       <property id="module.driver.uart.channel" value="3"/>
       <property id="module.driver.uart.data_bits" value="module.driver.uart.data_bits.data_bits_8"/>
       <property id="module.driver.uart.parity" value="module.driver.uart.parity.parity_off"/>
@@ -347,7 +347,7 @@
     <module id="module.driver.timer_on_agt.1554037125">
       <property id="module.driver.timer.name" value="g_modbus_timer"/>
       <property id="module.driver.timer.channel" value="0"/>
-      <property id="module.driver.timer.mode" value="module.driver.timer.mode.mode_one_shot"/>
+      <property id="module.driver.timer.mode" value="module.driver.timer.mode.mode_periodic"/>
       <property id="module.driver.timer.period" value="0x750"/>
       <property id="module.driver.timer.unit" value="module.driver.timer.unit.unit_period_usec"/>
       <property id="module.driver.timer.duty_cycle" value="50"/>
@@ -526,6 +526,15 @@
       <configSetting altId="sci3.mode.custom.free" configurationId="sci3.mode"/>
       <configSetting altId="sci3.rxd.p408" configurationId="sci3.rxd"/>
       <configSetting altId="sci3.txd.p409" configurationId="sci3.txd"/>
+    </pincfg>
+    <pincfg active="true" name="2023_04_14.pincfg" selected="false" symbol="g_bsp_pin_cfg0">
+      <configSetting altId="debug0.mode.swd" configurationId="debug0.mode"/>
+      <configSetting altId="debug0.swclk.p300" configurationId="debug0.swclk"/>
+      <configSetting altId="debug0.swdio.p108" configurationId="debug0.swdio"/>
+      <configSetting altId="p108.debug0.swdio" configurationId="p108"/>
+      <configSetting altId="p108.gpio_mode.gpio_mode_peripheral" configurationId="p108.gpio_mode"/>
+      <configSetting altId="p300.debug0.swclk" configurationId="p300"/>
+      <configSetting altId="p300.gpio_mode.gpio_mode_peripheral" configurationId="p300.gpio_mode"/>
     </pincfg>
   </raPinConfiguration>
 </raConfiguration>

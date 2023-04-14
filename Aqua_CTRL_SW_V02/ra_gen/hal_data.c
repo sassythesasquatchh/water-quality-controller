@@ -17,7 +17,7 @@ const agt_extended_cfg_t g_modbus_timer_extend =
   .enable_pin = AGT_ENABLE_PIN_NOT_USED,
   .trigger_edge = AGT_TRIGGER_EDGE_RISING, };
 const timer_cfg_t g_modbus_timer_cfg =
-{ .mode = TIMER_MODE_ONE_SHOT,
+{ .mode = TIMER_MODE_PERIODIC,
 /* Actual period: 0.001872 seconds. Actual duty: 50%. */.period_counts = (uint32_t) 0xb6d0,
   .duty_cycle_counts = 0x5b68, .source_div = (timer_source_div_t) 1, .channel = 0, .p_callback = modbus_timer_cb,
   /** If NULL then do not add & */
@@ -37,19 +37,19 @@ const timer_cfg_t g_modbus_timer_cfg =
 /* Instance structure to use this module. */
 const timer_instance_t g_modbus_timer =
 { .p_ctrl = &g_modbus_timer_ctrl, .p_cfg = &g_modbus_timer_cfg, .p_api = &g_timer_on_agt };
-sci_uart_instance_ctrl_t modbus_uart_ctrl;
+sci_uart_instance_ctrl_t g_modbus_uart_ctrl;
 
-baud_setting_t modbus_uart_baud_setting =
+baud_setting_t g_modbus_uart_baud_setting =
         {
         /* Baud rate calculated with 0.469% error. */.semr_baudrate_bits_b.abcse = 0,
           .semr_baudrate_bits_b.abcs = 0, .semr_baudrate_bits_b.bgdm = 1, .cks = 0, .brr = 53, .mddr = (uint8_t) 256, .semr_baudrate_bits_b.brme =
                   false };
 
 /** UART extended configuration for UARTonSCI HAL driver */
-const sci_uart_extended_cfg_t modbus_uart_cfg_extend =
+const sci_uart_extended_cfg_t g_modbus_uart_cfg_extend =
 { .clock = SCI_UART_CLOCK_INT, .rx_edge_start = SCI_UART_START_BIT_FALLING_EDGE, .noise_cancel =
           SCI_UART_NOISE_CANCELLATION_DISABLE,
-  .rx_fifo_trigger = SCI_UART_RX_FIFO_TRIGGER_MAX, .p_baud_setting = &modbus_uart_baud_setting, .flow_control =
+  .rx_fifo_trigger = SCI_UART_RX_FIFO_TRIGGER_MAX, .p_baud_setting = &g_modbus_uart_baud_setting, .flow_control =
           SCI_UART_FLOW_CONTROL_RTS,
 #if 0xFF != 0xFF
                 .flow_control_pin       = BSP_IO_PORT_FF_PIN_0xFF,
@@ -66,10 +66,10 @@ const sci_uart_extended_cfg_t modbus_uart_cfg_extend =
           }, };
 
 /** UART interface configuration */
-const uart_cfg_t modbus_uart_cfg =
+const uart_cfg_t g_modbus_uart_cfg =
 { .channel = 3, .data_bits = UART_DATA_BITS_8, .parity = UART_PARITY_OFF, .stop_bits = UART_STOP_BITS_1, .p_callback =
           modbus_uart_cb,
-  .p_context = NULL, .p_extend = &modbus_uart_cfg_extend,
+  .p_context = NULL, .p_extend = &g_modbus_uart_cfg_extend,
 #define RA_NOT_DEFINED (1)
 #if (RA_NOT_DEFINED == RA_NOT_DEFINED)
   .p_transfer_tx = NULL,
@@ -107,8 +107,8 @@ const uart_cfg_t modbus_uart_cfg =
         };
 
 /* Instance structure to use this module. */
-const uart_instance_t modbus_uart =
-{ .p_ctrl = &modbus_uart_ctrl, .p_cfg = &modbus_uart_cfg, .p_api = &g_uart_on_sci };
+const uart_instance_t g_modbus_uart =
+{ .p_ctrl = &g_modbus_uart_ctrl, .p_cfg = &g_modbus_uart_cfg, .p_api = &g_uart_on_sci };
 sci_uart_instance_ctrl_t g_uart0_ctrl;
 
 baud_setting_t g_uart0_baud_setting =

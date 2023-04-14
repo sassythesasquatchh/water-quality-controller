@@ -58,7 +58,7 @@ void hal_entry(void)
     (void) R_GPT_Open(&g_timer0_ctrl, &g_timer0_cfg);
 
     /* Initializes the UART module. */
-    R_SCI_UART_Open (&g_uart0_ctrl, &g_uart0_cfg);
+    R_SCI_UART_Open (&g_modbus_uart_ctrl, &g_modbus_uart_cfg);
 
     /* Enable channels for scanning. */
     // Set up the ADC scan configuration
@@ -66,6 +66,8 @@ void hal_entry(void)
 
     // Start the timer
     (void) R_GPT_Start(&g_timer0_ctrl);
+
+    (void) R_AGT_Start(&g_modbus_timer_ctrl);
 
     // Enter the main loop
     while (true){

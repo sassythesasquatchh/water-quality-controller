@@ -24,12 +24,12 @@ extern const timer_cfg_t g_modbus_timer_cfg;
 void modbus_timer_cb(timer_callback_args_t *p_args);
 #endif
 /** UART on SCI Instance. */
-extern const uart_instance_t modbus_uart;
+extern const uart_instance_t g_modbus_uart;
 
 /** Access the UART instance using these structures when calling API functions directly (::p_api is not used). */
-extern sci_uart_instance_ctrl_t modbus_uart_ctrl;
-extern const uart_cfg_t modbus_uart_cfg;
-extern const sci_uart_extended_cfg_t modbus_uart_cfg_extend;
+extern sci_uart_instance_ctrl_t g_modbus_uart_ctrl;
+extern const uart_cfg_t g_modbus_uart_cfg;
+extern const sci_uart_extended_cfg_t g_modbus_uart_cfg_extend;
 
 #ifndef modbus_uart_cb
 void modbus_uart_cb(uart_callback_args_t *p_args);
