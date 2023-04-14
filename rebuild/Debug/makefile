@@ -94,7 +94,7 @@ all: rebuild.elf secondary-outputs
 
 # Tool invocations
 rebuild.elf: $(OBJS) $(USER_OBJS) $(LINKER_SCRIPT)
-	$(file > rebuild.elf.in,-mcpu=cortex-m33 -mthumb -mfloat-abi=hard -mfpu=fpv5-sp-d16 -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wunused -Wuninitialized -Wall -Wextra -Wmissing-declarations -Wconversion -Wpointer-arith -Wshadow -Wlogical-op -Waggregate-return -Wfloat-equal  -g -gdwarf-4 -T "fsp.ld" -Xlinker --gc-sections -L "C:\\Users\\patri\\OneDrive\\Patricks OneDrive Share\\Documents\\water-quality-controller\\rebuild/script" -Wl,-Map,"rebuild.map" --specs=nano.specs --specs=rdimon.specs -o "rebuild.elf" -Wl,--start-group $(OBJS) $(USER_OBJS) $(LIBS) -Wl,--end-group)
+	$(file > rebuild.elf.in,-mcpu=cortex-m33 -mthumb -mfloat-abi=hard -mfpu=fpv5-sp-d16 -O2 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -Wunused -Wuninitialized -Wall -Wextra -Wmissing-declarations -Wconversion -Wpointer-arith -Wshadow -Wlogical-op -Waggregate-return -Wfloat-equal  -g -gdwarf-4 -T "fsp.ld" -Xlinker --gc-sections -L "C:\\Users\\patri\\OneDrive\\Patricks OneDrive Share\\Documents\\water-quality-controller\\water-quality-controller\\rebuild/script" -Wl,-Map,"rebuild.map" --specs=nano.specs --specs=rdimon.specs -o "rebuild.elf" -Wl,--start-group $(OBJS) $(USER_OBJS) $(LIBS) -Wl,--end-group)
 	@echo Building target: $@ && arm-none-eabi-gcc @"rebuild.elf.in"
 
 rebuild.srec: rebuild.elf

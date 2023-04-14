@@ -34,6 +34,11 @@ void modbus_timer_cb(timer_callback_args_t* p_args)
     // Check if the timer event is a cycle end event ie. that the period has ended
     if (TIMER_EVENT_CYCLE_END == p_args->event)
     {
+        // DEBUG ONLY
+        // DELETE ONCE DEBUG COMPLETE
+        R_IOPORT_PinWrite(&g_ioport_ctrl, DI_DOSING_EN, BSP_IO_LEVEL_HIGH); // Turn on IO pin
+
+
         // If the character interval has been exceeded
         // (indicating that 1000us + 750us = 1750us have already elapsed)
         // and that the FRAME_DELAY (1750us as per Modbus standards) has been exceeded
@@ -63,6 +68,10 @@ void modbus_timer_cb(timer_callback_args_t* p_args)
             // knows to process the message on the next pass
             g_modbus_msg_rcvd = true;
 
+            // DEBUG ONLY
+            // DELETE ONCE DEBUG COMPLETE
+            R_IOPORT_PinWrite(&g_ioport_ctrl, DI_DOSING_EN, BSP_IO_LEVEL_LOW); // Turn off IO pin
+
         }
         else
         {
@@ -72,8 +81,12 @@ void modbus_timer_cb(timer_callback_args_t* p_args)
 
             // Reset the timer to FRAME_DELAY (1750us) - CHARACTER_TIMEOUT (750us)
             // This means that if a character is not received before the next time this function
-            // is called, a FRAME_DELAY (1750us) will have elapsed and the message can be processed
+            // is called, a FRAME_DELAY (1750us) will have elapsed and the message should be processed
             reset_timer(FRAME_DELAY - CHARACTER_TIMEOUT);
+
+            // DEBUG ONLY
+            // DELETE ONCE DEBUG COMPLETE
+            R_IOPORT_PinWrite(&g_ioport_ctrl, DI_DOSING_EN, BSP_IO_LEVEL_LOW); // Turn off IO pin
         }
     }
 }

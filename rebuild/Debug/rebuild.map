@@ -134,8 +134,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x30 ./src/serial_communication.o
  .debug_ranges  0x00000000       0x90 ./src/serial_communication.o
- .debug_line    0x00000000      0x69e ./src/serial_communication.o
- .debug_str     0x00000000     0x3e67 ./src/serial_communication.o
+ .debug_line    0x00000000      0x734 ./src/serial_communication.o
+ .debug_str     0x00000000     0x3e80 ./src/serial_communication.o
  .comment       0x00000000       0x4a ./src/serial_communication.o
  .debug_frame   0x00000000       0x60 ./src/serial_communication.o
  .ARM.attributes
@@ -346,7 +346,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x18 ./ra/fsp/src/bsp/mcu/all/bsp_guard.o
  .debug_line    0x00000000       0x1d ./ra/fsp/src/bsp/mcu/all/bsp_guard.o
- .debug_str     0x00000000      0x1e8 ./ra/fsp/src/bsp/mcu/all/bsp_guard.o
+ .debug_str     0x00000000      0x201 ./ra/fsp/src/bsp/mcu/all/bsp_guard.o
  .comment       0x00000000       0x4a ./ra/fsp/src/bsp/mcu/all/bsp_guard.o
  .ARM.attributes
                 0x00000000       0x3a ./ra/fsp/src/bsp/mcu/all/bsp_guard.o
@@ -377,7 +377,7 @@ Discarded input sections
                 0x00000000       0x20 ./ra/fsp/src/bsp/mcu/all/bsp_sbrk.o
  .debug_ranges  0x00000000       0x10 ./ra/fsp/src/bsp/mcu/all/bsp_sbrk.o
  .debug_line    0x00000000      0x238 ./ra/fsp/src/bsp/mcu/all/bsp_sbrk.o
- .debug_str     0x00000000      0x272 ./ra/fsp/src/bsp/mcu/all/bsp_sbrk.o
+ .debug_str     0x00000000      0x28b ./ra/fsp/src/bsp/mcu/all/bsp_sbrk.o
  .comment       0x00000000       0x4a ./ra/fsp/src/bsp/mcu/all/bsp_sbrk.o
  .debug_frame   0x00000000       0x28 ./ra/fsp/src/bsp/mcu/all/bsp_sbrk.o
  .ARM.attributes
@@ -392,7 +392,7 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x18 ./ra/fsp/src/bsp/mcu/all/bsp_security.o
  .debug_line    0x00000000      0x1a2 ./ra/fsp/src/bsp/mcu/all/bsp_security.o
- .debug_str     0x00000000      0x230 ./ra/fsp/src/bsp/mcu/all/bsp_security.o
+ .debug_str     0x00000000      0x249 ./ra/fsp/src/bsp/mcu/all/bsp_security.o
  .comment       0x00000000       0x4a ./ra/fsp/src/bsp/mcu/all/bsp_security.o
  .ARM.attributes
                 0x00000000       0x3a ./ra/fsp/src/bsp/mcu/all/bsp_security.o
@@ -2040,90 +2040,90 @@ LOAD linker stubs
  .debug_ranges  0x00001568       0x18 ./ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/startup.o
  .debug_ranges  0x00001580       0x30 ./ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/system.o
 
-.debug_line     0x00000000     0xbfff
- .debug_line    0x00000000      0x313 ./src/application_data.o
- .debug_line    0x00000313      0x2e3 ./src/control_utils.o
- .debug_line    0x000005f6      0x7b1 ./src/dosing_control.o
- .debug_line    0x00000da7      0x7ee ./src/hal_entry.o
- .debug_line    0x00001595      0x658 ./src/hmi_control.o
- .debug_line    0x00001bed      0x1f3 ./src/modbus_crc.o
- .debug_line    0x00001de0      0xcc2 ./src/modbus_protocol.o
- .debug_line    0x00002aa2      0x423 ./ra_gen/common_data.o
- .debug_line    0x00002ec5      0x547 ./ra_gen/hal_data.o
- .debug_line    0x0000340c       0x5e ./ra_gen/main.o
- .debug_line    0x0000346a      0x288 ./ra_gen/pin_data.o
- .debug_line    0x000036f2      0x143 ./ra_gen/vector_data.o
- .debug_line    0x00003835     0x1a9d ./ra/fsp/src/r_sci_uart/r_sci_uart.o
- .debug_line    0x000052d2      0xd2d ./ra/fsp/src/r_ioport/r_ioport.o
- .debug_line    0x00005fff     0x125f ./ra/fsp/src/r_gpt/r_gpt.o
- .debug_line    0x0000725e      0xf1c ./ra/fsp/src/r_agt/r_agt.o
- .debug_line    0x0000817a     0x1519 ./ra/fsp/src/r_adc/r_adc.o
- .debug_line    0x00009693      0x8d6 ./ra/fsp/src/bsp/mcu/all/bsp_clocks.o
- .debug_line    0x00009f69      0x34f ./ra/fsp/src/bsp/mcu/all/bsp_common.o
- .debug_line    0x0000a2b8      0x374 ./ra/fsp/src/bsp/mcu/all/bsp_delay.o
- .debug_line    0x0000a62c      0x3f0 ./ra/fsp/src/bsp/mcu/all/bsp_group_irq.o
- .debug_line    0x0000aa1c      0x21a ./ra/fsp/src/bsp/mcu/all/bsp_io.o
- .debug_line    0x0000ac36      0x54d ./ra/fsp/src/bsp/mcu/all/bsp_irq.o
- .debug_line    0x0000b183      0x49f ./ra/fsp/src/bsp/mcu/all/bsp_register_protection.o
- .debug_line    0x0000b622      0x1a7 ./ra/fsp/src/bsp/mcu/all/bsp_rom_registers.o
- .debug_line    0x0000b7c9      0x29e ./ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/startup.o
- .debug_line    0x0000ba67      0x598 ./ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/system.o
+.debug_line     0x00000000     0xc8c9
+ .debug_line    0x00000000      0x32c ./src/application_data.o
+ .debug_line    0x0000032c      0x2e3 ./src/control_utils.o
+ .debug_line    0x0000060f      0x82e ./src/dosing_control.o
+ .debug_line    0x00000e3d      0x8b6 ./src/hal_entry.o
+ .debug_line    0x000016f3      0x6a3 ./src/hmi_control.o
+ .debug_line    0x00001d96      0x1f3 ./src/modbus_crc.o
+ .debug_line    0x00001f89      0xd58 ./src/modbus_protocol.o
+ .debug_line    0x00002ce1      0x4a0 ./ra_gen/common_data.o
+ .debug_line    0x00003181      0x5dd ./ra_gen/hal_data.o
+ .debug_line    0x0000375e       0x5e ./ra_gen/main.o
+ .debug_line    0x000037bc      0x2ba ./ra_gen/pin_data.o
+ .debug_line    0x00003a76      0x175 ./ra_gen/vector_data.o
+ .debug_line    0x00003beb     0x1b33 ./ra/fsp/src/r_sci_uart/r_sci_uart.o
+ .debug_line    0x0000571e      0xdc3 ./ra/fsp/src/r_ioport/r_ioport.o
+ .debug_line    0x000064e1     0x12f5 ./ra/fsp/src/r_gpt/r_gpt.o
+ .debug_line    0x000077d6      0xfb2 ./ra/fsp/src/r_agt/r_agt.o
+ .debug_line    0x00008788     0x15c8 ./ra/fsp/src/r_adc/r_adc.o
+ .debug_line    0x00009d50      0x908 ./ra/fsp/src/bsp/mcu/all/bsp_clocks.o
+ .debug_line    0x0000a658      0x368 ./ra/fsp/src/bsp/mcu/all/bsp_common.o
+ .debug_line    0x0000a9c0      0x3a6 ./ra/fsp/src/bsp/mcu/all/bsp_delay.o
+ .debug_line    0x0000ad66      0x43b ./ra/fsp/src/bsp/mcu/all/bsp_group_irq.o
+ .debug_line    0x0000b1a1      0x233 ./ra/fsp/src/bsp/mcu/all/bsp_io.o
+ .debug_line    0x0000b3d4      0x5b1 ./ra/fsp/src/bsp/mcu/all/bsp_irq.o
+ .debug_line    0x0000b985      0x4ea ./ra/fsp/src/bsp/mcu/all/bsp_register_protection.o
+ .debug_line    0x0000be6f      0x1a7 ./ra/fsp/src/bsp/mcu/all/bsp_rom_registers.o
+ .debug_line    0x0000c016      0x2b7 ./ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/startup.o
+ .debug_line    0x0000c2cd      0x5fc ./ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/system.o
 
-.debug_str      0x00000000    0x10343
- .debug_str     0x00000000      0x75a ./src/application_data.o
-                                0x7bb (size before relaxing)
- .debug_str     0x0000075a       0x61 ./src/control_utils.o
+.debug_str      0x00000000    0x103bd
+ .debug_str     0x00000000      0x773 ./src/application_data.o
+                                0x7d4 (size before relaxing)
+ .debug_str     0x00000773       0xc2 ./src/control_utils.o
                                 0x25d (size before relaxing)
- .debug_str     0x000007bb     0x2ac0 ./src/dosing_control.o
-                               0x3151 (size before relaxing)
- .debug_str     0x0000327b     0x3f46 ./src/hal_entry.o
-                               0x6ff5 (size before relaxing)
- .debug_str     0x000071c1       0x97 ./src/hmi_control.o
-                               0x17c7 (size before relaxing)
- .debug_str     0x00007258       0x42 ./src/modbus_crc.o
+ .debug_str     0x00000835     0x2ac0 ./src/dosing_control.o
+                               0x316a (size before relaxing)
+ .debug_str     0x000032f5     0x3f46 ./src/hal_entry.o
+                               0x700e (size before relaxing)
+ .debug_str     0x0000723b       0x97 ./src/hmi_control.o
+                               0x17e0 (size before relaxing)
+ .debug_str     0x000072d2       0x42 ./src/modbus_crc.o
                                 0x23a (size before relaxing)
- .debug_str     0x0000729a     0x17b1 ./src/modbus_protocol.o
-                               0x5bd9 (size before relaxing)
- .debug_str     0x00008a4b       0x39 ./ra_gen/common_data.o
-                               0x3284 (size before relaxing)
- .debug_str     0x00008a84     0x3a2f ./ra_gen/hal_data.o
-                               0xa5b1 (size before relaxing)
- .debug_str     0x0000c4b3       0x16 ./ra_gen/main.o
-                                0x1e8 (size before relaxing)
- .debug_str     0x0000c4c9      0x66b ./ra_gen/pin_data.o
-                               0x1d8d (size before relaxing)
- .debug_str     0x0000cb34       0x68 ./ra_gen/vector_data.o
-                               0x1ce8 (size before relaxing)
- .debug_str     0x0000cb9c      0xc73 ./ra/fsp/src/r_sci_uart/r_sci_uart.o
-                               0x6801 (size before relaxing)
- .debug_str     0x0000d80f      0x749 ./ra/fsp/src/r_ioport/r_ioport.o
-                               0x5664 (size before relaxing)
- .debug_str     0x0000df58      0x9c4 ./ra/fsp/src/r_gpt/r_gpt.o
-                               0x618c (size before relaxing)
- .debug_str     0x0000e91c      0x1aa ./ra/fsp/src/r_agt/r_agt.o
-                               0x46d6 (size before relaxing)
- .debug_str     0x0000eac6      0x5f6 ./ra/fsp/src/r_adc/r_adc.o
-                               0x8126 (size before relaxing)
- .debug_str     0x0000f0bc      0x704 ./ra/fsp/src/bsp/mcu/all/bsp_clocks.o
-                               0x2070 (size before relaxing)
- .debug_str     0x0000f7c0      0x10b ./ra/fsp/src/bsp/mcu/all/bsp_common.o
-                               0x1b98 (size before relaxing)
- .debug_str     0x0000f8cb       0xb1 ./ra/fsp/src/bsp/mcu/all/bsp_delay.o
-                                0x311 (size before relaxing)
- .debug_str     0x0000f97c      0x1de ./ra/fsp/src/bsp/mcu/all/bsp_group_irq.o
-                               0x20a3 (size before relaxing)
- .debug_str     0x0000fb5a       0x23 ./ra/fsp/src/bsp/mcu/all/bsp_io.o
-                                0x211 (size before relaxing)
- .debug_str     0x0000fb7d      0x36f ./ra/fsp/src/bsp/mcu/all/bsp_irq.o
-                               0x2598 (size before relaxing)
- .debug_str     0x0000feec       0x88 ./ra/fsp/src/bsp/mcu/all/bsp_register_protection.o
-                               0x19e7 (size before relaxing)
- .debug_str     0x0000ff74      0x197 ./ra/fsp/src/bsp/mcu/all/bsp_rom_registers.o
-                                0x36d (size before relaxing)
- .debug_str     0x0001010b       0x82 ./ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/startup.o
-                                0x25b (size before relaxing)
- .debug_str     0x0001018d      0x1b6 ./ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/system.o
-                                0x63d (size before relaxing)
+ .debug_str     0x00007314     0x17b1 ./src/modbus_protocol.o
+                               0x5bf2 (size before relaxing)
+ .debug_str     0x00008ac5       0x39 ./ra_gen/common_data.o
+                               0x329d (size before relaxing)
+ .debug_str     0x00008afe     0x3a2f ./ra_gen/hal_data.o
+                               0xa5ca (size before relaxing)
+ .debug_str     0x0000c52d       0x16 ./ra_gen/main.o
+                                0x201 (size before relaxing)
+ .debug_str     0x0000c543      0x66b ./ra_gen/pin_data.o
+                               0x1da6 (size before relaxing)
+ .debug_str     0x0000cbae       0x68 ./ra_gen/vector_data.o
+                               0x1d01 (size before relaxing)
+ .debug_str     0x0000cc16      0xc73 ./ra/fsp/src/r_sci_uart/r_sci_uart.o
+                               0x681a (size before relaxing)
+ .debug_str     0x0000d889      0x749 ./ra/fsp/src/r_ioport/r_ioport.o
+                               0x567d (size before relaxing)
+ .debug_str     0x0000dfd2      0x9c4 ./ra/fsp/src/r_gpt/r_gpt.o
+                               0x61a5 (size before relaxing)
+ .debug_str     0x0000e996      0x1aa ./ra/fsp/src/r_agt/r_agt.o
+                               0x46ef (size before relaxing)
+ .debug_str     0x0000eb40      0x5f6 ./ra/fsp/src/r_adc/r_adc.o
+                               0x813f (size before relaxing)
+ .debug_str     0x0000f136      0x704 ./ra/fsp/src/bsp/mcu/all/bsp_clocks.o
+                               0x2089 (size before relaxing)
+ .debug_str     0x0000f83a      0x10b ./ra/fsp/src/bsp/mcu/all/bsp_common.o
+                               0x1bb1 (size before relaxing)
+ .debug_str     0x0000f945       0xb1 ./ra/fsp/src/bsp/mcu/all/bsp_delay.o
+                                0x32a (size before relaxing)
+ .debug_str     0x0000f9f6      0x1de ./ra/fsp/src/bsp/mcu/all/bsp_group_irq.o
+                               0x20bc (size before relaxing)
+ .debug_str     0x0000fbd4       0x23 ./ra/fsp/src/bsp/mcu/all/bsp_io.o
+                                0x22a (size before relaxing)
+ .debug_str     0x0000fbf7      0x36f ./ra/fsp/src/bsp/mcu/all/bsp_irq.o
+                               0x25b1 (size before relaxing)
+ .debug_str     0x0000ff66       0x88 ./ra/fsp/src/bsp/mcu/all/bsp_register_protection.o
+                               0x1a00 (size before relaxing)
+ .debug_str     0x0000ffee      0x197 ./ra/fsp/src/bsp/mcu/all/bsp_rom_registers.o
+                                0x386 (size before relaxing)
+ .debug_str     0x00010185       0x82 ./ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/startup.o
+                                0x274 (size before relaxing)
+ .debug_str     0x00010207      0x1b6 ./ra/fsp/src/bsp/cmsis/Device/RENESAS/Source/system.o
+                                0x656 (size before relaxing)
 
 .debug_frame    0x00000000      0xfac
  .debug_frame   0x00000000       0x30 ./src/application_data.o
