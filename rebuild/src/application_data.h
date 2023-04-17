@@ -9,6 +9,7 @@
 #define APPLICATION_DATA_H_
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "hal_data.h"
 #include "control_utils.h"
 
@@ -22,6 +23,7 @@
 #define SUPPLY_VOLTAGE_DIAGNOSTIC_READING 0x04
 
 extern volatile uint64_t millis;
+extern volatile bool startup_complete;
 
 struct AppConfig
 {

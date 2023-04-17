@@ -57,7 +57,7 @@ src/modbus_protocol.o: ../src/modbus_protocol.c ../src/modbus_protocol.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/rebuild/ra_cfg/fsp_cfg/r_adc_cfg.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/rebuild/ra/fsp/inc/api/r_adc_api.h \
  C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/rebuild/ra/fsp/inc/api/r_elc_api.h \
- ../src/modbus_crc.h
+ ../src/application_data.h ../src/control_utils.h
 ../src/modbus_protocol.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/rebuild/ra_gen/hal_data.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/rebuild/ra/fsp/inc/api/bsp_api.h:
@@ -117,4 +117,5 @@ C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-contro
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/rebuild/ra_cfg/fsp_cfg/r_adc_cfg.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/rebuild/ra/fsp/inc/api/r_adc_api.h:
 C:/Users/patri/OneDrive/Patricks\ OneDrive\ Share/Documents/water-quality-controller/water-quality-controller/rebuild/ra/fsp/inc/api/r_elc_api.h:
-../src/modbus_crc.h:
+../src/application_data.h:
+../src/control_utils.h:

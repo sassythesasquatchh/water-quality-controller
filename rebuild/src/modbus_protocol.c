@@ -9,9 +9,6 @@
 // https://www.renesas.com/us/en/document/apn/rl78g14-modbus-asciirtu-r01an5380ej0102-rev102
 
 #include "modbus_protocol.h"
-#include "hal_data.h"
-#include <stdbool.h>
-#include "modbus_crc.h"
 
 volatile bool g_char_interval_exceeded = false;
 volatile bool g_modbus_msg_rcvd = false;
@@ -94,42 +91,46 @@ void modbus_timer_cb(timer_callback_args_t* p_args)
 // This function is called when the Modbus UART peripheral triggers an interrupt
 void modbus_uart_cb(uart_callback_args_t *p_args)
 {
-    // Check if event is a received character
-    if(UART_EVENT_RX_CHAR == p_args->event)
+
+    if (startup_complete)
     {
-        // Set the timer to 750us and restart
-        reset_timer(CHARACTER_TIMEOUT);
-
-        // If the character interval has been exceeded, reset the buffer and index
-        // This indicates that a character has been received more than 750us but
-        // less than 1750us since the last character was received. This means that
-        // the character is neither a valid part of the current message or the beginning
-        // of the next message. Therefore, the modbus UART receive buffer is reset.
-        if (g_char_interval_exceeded)
+        // Check if event is a received character
+        if(UART_EVENT_RX_CHAR == p_args->event)
         {
-            // Clear the buffer by setting all elements to RESET_VALUE (0x00)
-            memset((uint8_t*)buffer, RESET_VALUE, DATA_LENGTH);
+            // Set the timer to 750us and restart
+            reset_timer(CHARACTER_TIMEOUT);
 
-            // Reset the index to start writing next message from the beginning of the buffer
-            g_index = 0;
+            // If the character interval has been exceeded, reset the buffer and index
+            // This indicates that a character has been received more than 750us but
+            // less than 1750us since the last character was received. This means that
+            // the character is neither a valid part of the current message or the beginning
+            // of the next message. Therefore, the modbus UART receive buffer is reset.
+            if (g_char_interval_exceeded)
+            {
+                // Clear the buffer by setting all elements to RESET_VALUE (0x00)
+                memset((uint8_t*)buffer, RESET_VALUE, DATA_LENGTH);
 
-        }
-        // If the character interval has not been exceeded, add the character to the buffer.
-        // This indicates that less than 750us have elapsed since the last character was received,
-        // so the character is a valid part of the current message.
-        else
-        {
-            // Add the character to the buffer
-            buffer[g_index] = (uint8_t) p_args->data;
+                // Reset the index to start writing next message from the beginning of the buffer
+                g_index = 0;
 
-            // Increment the index to start writing from the next available position in the buffer
-            g_index++;
+            }
+            // If the character interval has not been exceeded, add the character to the buffer.
+            // This indicates that less than 750us have elapsed since the last character was received,
+            // so the character is a valid part of the current message.
+            else
+            {
+                // Add the character to the buffer
+                buffer[g_index] = (uint8_t) p_args->data;
+
+                // Increment the index to start writing from the next available position in the buffer
+                g_index++;
+            }
         }
     }
 }
 
 // This function is called to change the period of the timer and restart it
-void reset_timer(uint16_t new_period)
+void reset_timer(uint16_t new_period_us)
 {
     // Stop the Modbus timer
     R_AGT_Stop(&g_modbus_timer_ctrl);
@@ -138,7 +139,7 @@ void reset_timer(uint16_t new_period)
     uint32_t timer_freq_hz = R_FSP_SystemClockHzGet(FSP_PRIV_CLOCK_PCLKB) >> g_modbus_timer_cfg.source_div;
 
     // Calculate the number of timer counts needed for the new period
-    uint32_t period_counts = (uint32_t)(((uint64_t)timer_freq_hz * new_period) / 1000000);
+    uint32_t period_counts = (uint32_t)(((uint64_t)timer_freq_hz * new_period_us) / 1000000);
 
     // Set the new period for the Modbus timer
     R_AGT_PeriodSet(&g_modbus_timer_ctrl, period_counts);
@@ -150,35 +151,39 @@ void reset_timer(uint16_t new_period)
 
 void handle_modbus_message()
 {
-    // Calculate the CRC of the received message from the contents of the message excluding
-    // the received CRC (final two bytes of the message)
-    uint16_t crc = crc16((uint8_t*)modbus_rx_buffer, g_length_msg-2);
-
-    // If the calculated CRC matches the received CRC
-    if (crc == (modbus_rx_buffer[g_length_msg] << 8 | modbus_rx_buffer[g_length_msg-1]))
+    if(g_length_msg > 2)
     {
-        // If the message is addressed to this device
-        if (modbus_rx_buffer[0]==SLAVE_ID)
-        {
-            // Determine the command and take appropriate action
-            switch (modbus_rx_buffer[1])
-            {
-                case READ_HOLDING_REGISTERS:
-                    read_holding_registers();
-                    break;
-                case READ_INPUT_REGISTERS:
-                    read_input_registers();
-                    break;
-                case WRITE_HOLDING_REGISTERS:
-                    write_holding_registers();
-                    break;
-                default:
-                    // If the command is unsupported, return an exception message to the master device
-                    modbus_exception(ILLEGAL_FUNCTION, modbus_rx_buffer[1]);
-            }
-        }
-    }
+       // Calculate the CRC of the received message from the contents of the message excluding
+       // the received CRC (final two bytes of the message)
+       volatile uint16_t crc = crc16((uint8_t*)modbus_rx_buffer, g_length_msg-2);
+       volatile uint16_t debug = modbus_rx_buffer[g_length_msg-1] << 8 | modbus_rx_buffer[g_length_msg-2];
 
+       volatile bool b_debug = crc == debug;
+       // If the calculated CRC matches the received CRC
+       if (crc == (modbus_rx_buffer[g_length_msg-1] << 8 | modbus_rx_buffer[g_length_msg-2]))
+       {
+           // If the message is addressed to this device
+           if (modbus_rx_buffer[0]==SLAVE_ID)
+           {
+               // Determine the command and take appropriate action
+               switch (modbus_rx_buffer[1])
+               {
+                   case READ_HOLDING_REGISTERS:
+                       read_holding_registers();
+                       break;
+                   case READ_INPUT_REGISTERS:
+                       read_input_registers();
+                       break;
+                   case WRITE_HOLDING_REGISTERS:
+                       write_holding_registers();
+                       break;
+                   default:
+                       // If the command is unsupported, return an exception message to the master device
+                       modbus_exception(ILLEGAL_FUNCTION, modbus_rx_buffer[1]);
+               }
+           }
+       }
+    }
     // Reset the received message flag
     g_modbus_msg_rcvd = false;
 }

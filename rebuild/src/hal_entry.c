@@ -12,6 +12,8 @@ FSP_CPP_FOOTER
 // Define a volatile 64-bit unsigned integer variable to hold millisecond values
 volatile uint64_t millis = 0;
 
+volatile bool startup_complete = 0;
+
 // Define a function to increment the millisecond value when a timer event occurs
 void count_millis (timer_callback_args_t *p_args)
 {
@@ -76,6 +78,7 @@ void hal_entry(void)
         continue;
     }
 
+    startup_complete = true;
 
     /* Initializes the module. */
     R_AGT_Open(&g_modbus_timer_ctrl, &g_modbus_timer_cfg);

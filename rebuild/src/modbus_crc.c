@@ -84,7 +84,7 @@ static const uint8_t table_crc_lo[] = {
 //The bytes are already swapped in the CRC value that is returned from the function.
 //Therefore the CRC value returned from the function can be directly placed into the message for transmission.
 
-uint16_t crc16(uint8_t *buffer, uint16_t buffer_length)
+uint16_t crc16(uint8_t *buffer, volatile uint16_t buffer_length)
 {
     uint8_t crc_hi = 0xFF; // initialize high CRC byte to 0xFF
     uint8_t crc_lo = 0xFF; // initialize low CRC byte to 0xFF

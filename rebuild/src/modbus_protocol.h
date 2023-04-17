@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "hal_data.h"
+#include "application_data.h"
 
 // https://modbus.org/docs/PI_MBUS_300.pdf (page 106 for formula and page 9 for description of framing)
 // https://www.modbus.org/docs/Modbus_over_serial_line_V1_02.pdf (page 13 for interval lengths for high baud rates)
