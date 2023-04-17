@@ -556,10 +556,10 @@ FSP Configuration
       Extra: Start bit detection: Falling Edge
       Extra: Noise Filter: Disable
       Extra: Receive FIFO Trigger Level: Max
-      Extra: RS-485: DE Pin: Disable
+      Extra: RS-485: DE Pin: Enable
       Extra: RS-485: DE Pin Polarity: Active High
-      Extra: RS-485: DE Port Number: Disabled
-      Extra: RS-485: DE Pin Number: Disabled
+      Extra: RS-485: DE Port Number: 04
+      Extra: RS-485: DE Pin Number: 10
       Interrupts: Callback: modbus_uart_cb
       Interrupts: Receive Interrupt Priority: Priority 12
       Interrupts: Transmit Data Empty Interrupt Priority: Priority 12
