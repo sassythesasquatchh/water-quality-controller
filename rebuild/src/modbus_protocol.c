@@ -131,7 +131,6 @@ void modbus_uart_cb(uart_callback_args_t *p_args)
         if(UART_EVENT_TX_COMPLETE == p_args->event)
         {
             memset((uint8_t*)modbus_tx_buffer, RESET_VALUE, DATA_LENGTH); // Clear transmit buffer of message that has just been sent
-            break;
         }
     }
 }
