@@ -202,7 +202,19 @@ void send_modbus(int length)
     uint16_t crc = crc16((uint8_t*)modbus_tx_buffer, length); // Calculate the CRC for the message
     modbus_tx_buffer[length] = (uint8_t) crc&0xff; // Append the low byte of the CRC to the message
     modbus_tx_buffer[length+1] = (uint8_t)(crc>>8)&0xff; // Append the high byte of the CRC to the message
+
+    // Enable RS-485 transmission
+    R_IOPORT_PinWrite(&g_ioport_ctrl, DO_COMM_RX_EN, BSP_IO_LEVEL_HIGH);
+    R_IOPORT_PinWrite(&g_ioport_ctrl, DO_COMM_TX_EN, BSP_IO_LEVEL_HIGH);
+
+
     R_SCI_UART_Write(&g_modbus_uart_ctrl, modbus_tx_buffer, length + 2); // Send the message over UART including the CRC bytes
+
+    // Disable RS-485 transmission
+    R_IOPORT_PinWrite(&g_ioport_ctrl, DO_COMM_RX_EN, BSP_IO_LEVEL_LOW);
+    R_IOPORT_PinWrite(&g_ioport_ctrl, DO_COMM_TX_EN, BSP_IO_LEVEL_LOW);
+
+
     memset((uint8_t*)modbus_tx_buffer, RESET_VALUE, DATA_LENGTH); // Clear transmit buffer of message that has just been sent
     memset((uint8_t*)modbus_rx_buffer, RESET_VALUE, DATA_LENGTH); // Clear modbus receive buffer of message that has just been processed
 }
