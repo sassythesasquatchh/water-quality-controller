@@ -57,12 +57,12 @@ const sci_uart_extended_cfg_t g_modbus_uart_cfg_extend =
   .flow_control_pin = (bsp_io_port_pin_t) UINT16_MAX,
 #endif
   .rs485_setting =
-  { .enable = SCI_UART_RS485_DISABLE, .polarity = SCI_UART_RS485_DE_POLARITY_HIGH,
-#if 0xFF != 0xFF
-                    .de_control_pin = BSP_IO_PORT_FF_PIN_0xFF,
-                #else
-    .de_control_pin = (bsp_io_port_pin_t) UINT16_MAX,
-#endif
+  { .enable = SCI_UART_RS485_ENABLE, .polarity = SCI_UART_RS485_DE_POLARITY_HIGH,
+#if 0xFF != 0x04
+    .de_control_pin = BSP_IO_PORT_04_PIN_10,
+#else
+                    .de_control_pin       = (bsp_io_port_pin_t) UINT16_MAX,
+                #endif
           }, };
 
 /** UART interface configuration */

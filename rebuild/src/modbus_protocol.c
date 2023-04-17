@@ -126,6 +126,13 @@ void modbus_uart_cb(uart_callback_args_t *p_args)
                 g_index++;
             }
         }
+
+        /* Transmit complete */
+        if(UART_EVENT_TX_COMPLETE == p_args->event)
+        {
+            memset((uint8_t*)modbus_tx_buffer, RESET_VALUE, DATA_LENGTH); // Clear transmit buffer of message that has just been sent
+            break;
+        }
     }
 }
 
@@ -215,7 +222,6 @@ void send_modbus(int length)
 //    R_IOPORT_PinWrite(&g_ioport_ctrl, DO_COMM_TX_EN, BSP_IO_LEVEL_LOW);
 
 
-    memset((uint8_t*)modbus_tx_buffer, RESET_VALUE, DATA_LENGTH); // Clear transmit buffer of message that has just been sent
     memset((uint8_t*)modbus_rx_buffer, RESET_VALUE, DATA_LENGTH); // Clear modbus receive buffer of message that has just been processed
 }
 
