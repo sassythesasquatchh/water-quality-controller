@@ -235,6 +235,7 @@ void read_input_registers()
     if (num_registers<1 || num_registers > 125)
     {
         modbus_exception(ILLEGAL_DATA_VALUE, modbus_rx_buffer[1]); // Send exception response if not valid
+        return;
     }
 
     // Calculate ending address of register range to read
@@ -242,6 +243,7 @@ void read_input_registers()
     if (end_address>2)
     {
         modbus_exception(ILLEGAL_DATA_ADDRESS, modbus_rx_buffer[1]); // Send exception response if address range is invalid
+        return;
     }
 
     // Construct response message header
@@ -275,6 +277,7 @@ void read_holding_registers()
     {
         // If not, send an exception response with ILLEGAL_DATA_VALUE error code (0x03)
         modbus_exception(ILLEGAL_DATA_VALUE, modbus_rx_buffer[1]);
+        return;
     }
 
     // Calculate the end address of the requested range of registers
@@ -285,6 +288,7 @@ void read_holding_registers()
     {
         // If not, send an exception response with ILLEGAL_DATA_ADDRESS error code (0x02)
         modbus_exception(ILLEGAL_DATA_ADDRESS, modbus_rx_buffer[1]);
+        return;
     }
 
     // If start and end addresses are valid, create a Modbus response with requested data
@@ -320,6 +324,7 @@ void write_holding_registers()
     {
         // If not, send an exception response with ILLEGAL_DATA_VALUE error code (0x03)
         modbus_exception(ILLEGAL_DATA_VALUE, modbus_rx_buffer[1]);
+        return;
     }
 
     uint16_t endAddr = startAddr + numRegs - 1;  // Calculate end address of register
@@ -327,6 +332,7 @@ void write_holding_registers()
     {
         // If not, send an exception response with ILLEGAL_DATA_ADDRESS error code (0x02)
         modbus_exception(ILLEGAL_DATA_ADDRESS, modbus_rx_buffer[1]);
+        return;
     }
 
     // Store 16-bit data starting from modbus_rx_buffer[6]
