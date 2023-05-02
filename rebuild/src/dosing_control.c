@@ -59,18 +59,49 @@ void read_sensors(struct AppConfig *configs, bool err_arr[])
     // Turn off the power supply to the pH and conductivity sensors
     turn_sensors_off();
 
-    // Check if pH reading is higher than the high warning threshold and set corresponding error flag
-    err_arr[PH_HIGH_WARNING] = ph_reading_adc >= configs->ph_high_warning_raw;
     // Check if pH reading is lower than the low warning threshold and set corresponding error flag
-    err_arr[PH_LOW_WARNING] = ph_reading_adc <= configs->ph_low_warning_raw;
-    // Check if conductivity reading is higher than the high warning threshold and set corresponding error flag
-    err_arr[CONDUCTIVITY_HIGH_WARNING] = conductivity_reading_adc >= configs->conductivity_high_warning_raw;
+    setDosingStatusRegister(PH_LOW_WARNING, ph_reading_adc <= configs->ph_low_warning_raw);
+
+    // Check if pH reading is higher than the high warning threshold and set corresponding error flag
+    setDosingStatusRegister(PH_HIGH_WARNING, ph_reading_adc >= configs->ph_high_warning_raw);
+
+    // Check if pH reading is lower than the low cutoff threshold and set corresponding error flag
+    setDosingStatusRegister(PH_LOW_CUTOFF, ph_reading_adc <= configs->ph_low_cutoff_raw);
+
+    // Check if pH reading is higher than the high cutoff threshold and set corresponding error flag
+    setDosingStatusRegister(PH_HIGH_CUTOFF, ph_reading_adc >= configs->ph_high_cutoff_raw);
+
     // Check if conductivity reading is lower than the low warning threshold and set corresponding error flag
-    err_arr[CONDUCTIVITY_LOW_WARNING] = conductivity_reading_adc <= configs->conductivity_low_warning_raw;
-    // Check if supply voltage diagnostic reading is higher than the high threshold and set corresponding error flag
-    err_arr[SUPPLY_VOLTAGE_HIGH] = supply_voltage_diagnostic_reading >= analog_mains_high_threshold;
+    setDosingStatusRegister(CONDUCTIVITY_LOW_WARNING, conductivity_reading_adc <= configs->conductivity_low_warning_raw);
+
+    // Check if conductivity reading is higher than the high warning threshold and set corresponding error flag
+    setDosingStatusRegister(CONDUCTIVITY_HIGH_WARNING, conductivity_reading_adc >= configs->conductivity_high_warning_raw);
+
+    // Check if conductivity reading is lower than the low cutoff threshold and set corresponding error flag
+    setDosingStatusRegister(CONDUCTIVITY_LOW_CUTOFF, conductivity_reading_adc <= configs->conductivity_low_cutoff_raw);
+
+    // Check if conductivity reading is higher than the high cutoff threshold and set corresponding error flag
+    setDosingStatusRegister(CONDUCTIVITY_HIGH_CUTOFF, conductivity_reading_adc >= configs->conductivity_high_cutoff_raw);
+
     // Check if supply voltage diagnostic reading is lower than the low threshold and set corresponding error flag
-    err_arr[SUPPLY_VOLTAGE_LOW] = supply_voltage_diagnostic_reading <= analog_mains_low_threshold;
+    setDosingStatusRegister(SUPPLY_VOLTAGE_LOW, supply_voltage_diagnostic_reading <= analog_mains_low_threshold);
+
+    // Check if supply voltage diagnostic reading is higher than the high threshold and set corresponding error flag
+    setDosingStatusRegister(SUPPLY_VOLTAGE_HIGH, supply_voltage_diagnostic_reading >= analog_mains_high_threshold);
+
+
+//    // Check if pH reading is higher than the high warning threshold and set corresponding error flag
+//    err_arr[PH_HIGH_WARNING] = ph_reading_adc >= configs->ph_high_warning_raw;
+//    // Check if pH reading is lower than the low warning threshold and set corresponding error flag
+//    err_arr[PH_LOW_WARNING] = ph_reading_adc <= configs->ph_low_warning_raw;
+//    // Check if conductivity reading is higher than the high warning threshold and set corresponding error flag
+//    err_arr[CONDUCTIVITY_HIGH_WARNING] = conductivity_reading_adc >= configs->conductivity_high_warning_raw;
+//    // Check if conductivity reading is lower than the low warning threshold and set corresponding error flag
+//    err_arr[CONDUCTIVITY_LOW_WARNING] = conductivity_reading_adc <= configs->conductivity_low_warning_raw;
+//    // Check if supply voltage diagnostic reading is higher than the high threshold and set corresponding error flag
+//    err_arr[SUPPLY_VOLTAGE_HIGH] = supply_voltage_diagnostic_reading >= analog_mains_high_threshold;
+//    // Check if supply voltage diagnostic reading is lower than the low threshold and set corresponding error flag
+//    err_arr[SUPPLY_VOLTAGE_LOW] = supply_voltage_diagnostic_reading <= analog_mains_low_threshold;
 
     // Check if pH reading is lower than or equal to the pH setpoint and set corresponding take action flag
     takeActionPH = ph_reading_adc <= configs->ph_setpoint_raw;
@@ -144,4 +175,18 @@ void turn_sensors_off()
     R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_SENSOR_ON, BSP_IO_LEVEL_LOW); // Turn off the conductivity sensor
 
     sensors_on = false;
+}
+
+void setDosingStatusRegister(int n, int value) {
+    // Create a mask with the nth bit set to 1
+    unsigned int mask = 1 << n;
+
+    // If value is 1, set the nth bit to 1 using bitwise OR
+    // If value is 0, set the nth bit to 0 using bitwise AND with the complement of the mask
+    if (value == 1) {
+        input_registers[DOSING_STATUS_REGISTER] = input_registers[DOSING_STATUS_REGISTER] | mask;
+    } else {
+        input_registers[DOSING_STATUS_REGISTER] = input_registers[DOSING_STATUS_REGISTER] & (~mask);
+    }
+    return;
 }

@@ -39,6 +39,7 @@
 #define WRITE_HOLDING_REGISTERS 0x10
 
 // Indices for the holding registers
+#define DOSING_STATUS_REGISTER 0x00
 #define PH_READING_INDEX 0x01
 #define CONDUCTIVITY_READING_INDEX 0x02
 

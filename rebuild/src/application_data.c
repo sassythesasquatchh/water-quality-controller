@@ -15,11 +15,15 @@ const uint16_t analog_mains_low_threshold = 1281; // Represents mains voltage dr
 uint16_t ph_setpoint = 70; // In pH*10 to avoid decimals (eg. write 70 for 7.0 pH)
 uint16_t ph_low_warning = 68; // In pH*10 to avoid decimals (eg. write 70 for 7.0 pH)
 uint16_t ph_high_warning = 81; // In pH*10 to avoid decimals (eg. write 70 for 7.0 pH)
+uint16_t ph_low_cutoff = 67; // In pH*10 to avoid decimals (eg. write 70 for 7.0 pH)
+uint16_t ph_high_cutoff = 83; // In pH*10 to avoid decimals (eg. write 70 for 7.0 pH)
 uint16_t ph_hysteresis = 1; // In pH*10 to avoid decimals (eg. write 1 for 0.1 pH)
 
 uint16_t conductivity_setpoint = 700; // In micro-siemens
 uint16_t conductivity_low_warning = 300; // In micro-siemens
 uint16_t conductivity_high_warning = 900; // In micro-siemens
+uint16_t conductivity_low_cutoff = 200; // In micro-siemens
+uint16_t conductivity_high_cutoff = 900; // In micro-siemens
 uint16_t conductivity_hysteresis = 5; // In micro-siemens
 
 uint8_t ph_sensor_voltage_adc_channel = ADC_CHANNEL_17;
@@ -56,12 +60,20 @@ void configure_app(struct AppConfig *configs)
     configs->ph_low_warning_raw = convert_ph_to_adc(ph_low_warning-ph_hysteresis);
     // Convert the pH high warning threshold to raw ADC value
     configs->ph_high_warning_raw = convert_ph_to_adc(ph_high_warning-ph_hysteresis);
+    // Convert the pH low cutoff threshold to raw ADC value
+    configs->ph_low_cutoff_raw = convert_ph_to_adc(ph_low_cutoff-ph_hysteresis);
+    // Convert the pH high cutoff threshold to raw ADC value
+    configs->ph_high_cutoff_raw = convert_ph_to_adc(ph_high_cutoff-ph_hysteresis);
     // Convert the conductivity setpoint to raw ADC value
     configs->conductivity_setpoint_raw = convert_cond_to_adc(conductivity_setpoint-conductivity_hysteresis);
     // Convert the conductivity low warning threshold to raw ADC value
     configs->conductivity_low_warning_raw = convert_ph_to_adc(conductivity_low_warning-conductivity_hysteresis);
     // Convert the conductivity high warning threshold to raw ADC value
     configs->conductivity_high_warning_raw = convert_ph_to_adc(conductivity_high_warning-conductivity_hysteresis);
+    // Convert the conductivity low cutoff threshold to raw ADC value
+    configs->conductivity_low_cutoff_raw = convert_ph_to_adc(conductivity_low_cutoff-conductivity_hysteresis);
+    // Convert the conductivity high cutoff threshold to raw ADC value
+    configs->conductivity_high_cutoff_raw = convert_ph_to_adc(conductivity_high_cutoff-conductivity_hysteresis);
 }
 
 

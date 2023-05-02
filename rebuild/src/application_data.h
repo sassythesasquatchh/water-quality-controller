@@ -34,9 +34,13 @@ struct AppConfig
     uint16_t ph_setpoint_raw;
     uint16_t ph_low_warning_raw;
     uint16_t ph_high_warning_raw;
+    uint16_t ph_low_cutoff_raw;
+    uint16_t ph_high_cutoff_raw;
     uint16_t conductivity_setpoint_raw;
     uint16_t conductivity_low_warning_raw;
     uint16_t conductivity_high_warning_raw;
+    uint16_t conductivity_low_cutoff_raw;
+    uint16_t conductivity_high_cutoff_raw;
 
 };
 
@@ -50,11 +54,15 @@ extern const uint16_t analog_mains_low_threshold;
 extern uint16_t ph_setpoint;
 extern uint16_t ph_low_warning;
 extern uint16_t ph_high_warning;
+extern uint16_t ph_low_cutoff;
+extern uint16_t ph_high_cutoff;
 extern uint16_t ph_hysteresis;
 
 extern uint16_t conductivity_setpoint;
 extern uint16_t conductivity_low_warning;
 extern uint16_t conductivity_high_warning;
+extern uint16_t conductivity_low_cutoff;
+extern uint16_t conductivity_high_cutoff;
 extern uint16_t conductivity_hysteresis;
 
 extern uint8_t ph_sensor_voltage_adc_channel;

@@ -26,11 +26,15 @@
 #define CONDUCTIVITY_HIGH_CUTOFF 0x09
 #define SUPPLY_VOLTAGE_LOW 0x0A
 #define SUPPLY_VOLTAGE_HIGH 0x0B
+#define PH_PUMP_ON 0x0C
+#define CONDUCTIVITY_PUMP_ON 0x0D
 
 void read_sensors(struct AppConfig *, bool[]);
 void handle_pumps(struct AppConfig *);
 void turn_sensors_on();
 void turn_sensors_off();
+void setDosingStatusRegister(int , int);
+
 
 extern volatile bool sensors_on;
 
