@@ -118,6 +118,7 @@ void handle_pumps(struct AppConfig *configs)
 {
     // Check if pH pump needs to be turned on
     if (!pumpOnPH && takeActionPH && !takingActionPH){
+        setDosingStatusRegister(PH_PUMP_ON, 1);
         pumpOnPH = true;
         onTimerPH = millis; // Start timer to keep track of how long the pump has been on
         takingActionPH = true; // Set flag to indicate that the pump is currently running
@@ -127,6 +128,7 @@ void handle_pumps(struct AppConfig *configs)
 
     // Check if pH pump needs to be turned off
     if (pumpOnPH && (millis - onTimerPH > configs->pump_on_interval_ph)){
+        setDosingStatusRegister(PH_PUMP_ON, 0);
         pumpOnPH = false;
         offTimerPH = millis; // Start timer to keep track of how long the pump has been off
         R_IOPORT_PinWrite(&g_ioport_ctrl, DO_PH_PUMP, BSP_IO_LEVEL_LOW); // Turn off the pH pump
@@ -140,6 +142,7 @@ void handle_pumps(struct AppConfig *configs)
 
     // Check if conductivity pump needs to be turned on
     if (!pumpOnCond && takeActionCond && !takingActionCond){
+        setDosingStatusRegister(CONDUCTIVITY_PUMP_ON, 1);
         pumpOnCond = true;
         onTimerCond = millis; // Start timer to keep track of how long the pump has been on
         takingActionCond = true; // Set flag to indicate that the pump is currently running
@@ -149,6 +152,7 @@ void handle_pumps(struct AppConfig *configs)
 
     // Check if conductivity pump needs to be turned off
     if (pumpOnCond && (millis - onTimerCond > configs->pump_on_interval_cond)){
+        setDosingStatusRegister(CONDUCTIVITY_PUMP_ON, 0);
         pumpOnCond = false;
         offTimerCond = millis; // Start timer to keep track of how long the pump has been off
         R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_PUMP, BSP_IO_LEVEL_LOW); // Turn off the conductivity pump
@@ -179,14 +183,14 @@ void turn_sensors_off()
 
 void setDosingStatusRegister(int n, int value) {
     // Create a mask with the nth bit set to 1
-    unsigned int mask = 1 << n;
+    uint16_t mask = 1 << n;
 
     // If value is 1, set the nth bit to 1 using bitwise OR
     // If value is 0, set the nth bit to 0 using bitwise AND with the complement of the mask
     if (value == 1) {
-        input_registers[DOSING_STATUS_REGISTER] = input_registers[DOSING_STATUS_REGISTER] | mask;
+        input_registers[DOSING_STATUS_REGISTER] = (uint16_t) input_registers[DOSING_STATUS_REGISTER] | mask;
     } else {
-        input_registers[DOSING_STATUS_REGISTER] = input_registers[DOSING_STATUS_REGISTER] & (~mask);
+        input_registers[DOSING_STATUS_REGISTER] = (uint16_t) input_registers[DOSING_STATUS_REGISTER] & (~mask);
     }
     return;
 }
