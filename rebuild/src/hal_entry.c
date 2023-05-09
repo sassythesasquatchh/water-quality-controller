@@ -31,13 +31,14 @@ void count_millis (timer_callback_args_t *p_args)
  **********************************************************************************************************************/
 void hal_entry(void)
 {
+    initialise_holding_registers();
+
     // Define a struct to hold configuration settings
     struct AppConfig configs;
     // Call a function to set up the configuration settings
     configure_app(&configs);
 
-    // Define an array of volatile boolean variables with length 16 and initialize all values to 0
-    volatile bool err_arr[16] = {0};
+
 
     // Define a volatile boolean variable and initialize it to true
     volatile bool firstPass = true;
@@ -135,6 +136,11 @@ void hal_entry(void)
 
         if (g_modbus_msg_rcvd) { // check if Modbus message has been received
             handle_modbus_message(); // handle the Modbus message
+        }
+
+        if (g_new_configurations_rcvd){
+            configure_app(&configs);
+            g_new_configurations_rcvd = false;
         }
     }
 

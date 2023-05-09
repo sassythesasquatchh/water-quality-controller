@@ -118,52 +118,72 @@ void read_sensors(struct AppConfig *configs)
 
 void handle_pumps(struct AppConfig *configs)
 {
-    // Check if pH pump needs to be turned on
-    if (!pumpOnPH && takeActionPH && !takingActionPH){
-        setDosingStatusRegister(PH_PUMP_ON, 1);
-        pumpOnPH = true;
-        onTimerPH = millis; // Start timer to keep track of how long the pump has been on
-        takingActionPH = true; // Set flag to indicate that the pump is currently running
-        R_IOPORT_PinWrite(&g_ioport_ctrl, DO_PH_PUMP, BSP_IO_LEVEL_HIGH); // Turn on the pH pump
-        R_IOPORT_PinWrite(&g_ioport_ctrl, DO_PH_PUMP_ON_LED, BSP_IO_LEVEL_HIGH); // Turn on the LED indicating that the pH pump is on
-    }
-
-    // Check if pH pump needs to be turned off
-    if (pumpOnPH && (millis - onTimerPH > configs->pump_on_interval_ph)){
+    if(readDosingStatusRegister(PH_LOW_CUTOFF)|readDosingStatusRegister(PH_HIGH_CUTOFF))
+    {
         setDosingStatusRegister(PH_PUMP_ON, 0);
         pumpOnPH = false;
         offTimerPH = millis; // Start timer to keep track of how long the pump has been off
         R_IOPORT_PinWrite(&g_ioport_ctrl, DO_PH_PUMP, BSP_IO_LEVEL_LOW); // Turn off the pH pump
-        R_IOPORT_PinWrite(&g_ioport_ctrl, DO_PH_PUMP_ON_LED, BSP_IO_LEVEL_LOW); // Turn off the LED indicating that the pH pump is off
+        R_IOPORT_PinWrite(&g_ioport_ctrl, DO_PH_PUMP_ON_LED, BSP_IO_LEVEL_LOW); // Turn off the LED indicating that the pH pump is on
+    }else
+    {
+        // Check if pH pump needs to be turned on
+        if (!pumpOnPH && takeActionPH && !takingActionPH){
+            setDosingStatusRegister(PH_PUMP_ON, 1);
+            pumpOnPH = true;
+            onTimerPH = millis; // Start timer to keep track of how long the pump has been on
+            takingActionPH = true; // Set flag to indicate that the pump is currently running
+            R_IOPORT_PinWrite(&g_ioport_ctrl, DO_PH_PUMP, BSP_IO_LEVEL_HIGH); // Turn on the pH pump
+            R_IOPORT_PinWrite(&g_ioport_ctrl, DO_PH_PUMP_ON_LED, BSP_IO_LEVEL_HIGH); // Turn on the LED indicating that the pH pump is on
+        }
+
+        // Check if pH pump needs to be turned off
+        if (pumpOnPH && (millis - onTimerPH > configs->pump_on_interval_ph)){
+            setDosingStatusRegister(PH_PUMP_ON, 0);
+            pumpOnPH = false;
+            offTimerPH = millis; // Start timer to keep track of how long the pump has been off
+            R_IOPORT_PinWrite(&g_ioport_ctrl, DO_PH_PUMP, BSP_IO_LEVEL_LOW); // Turn off the pH pump
+            R_IOPORT_PinWrite(&g_ioport_ctrl, DO_PH_PUMP_ON_LED, BSP_IO_LEVEL_LOW); // Turn off the LED indicating that the pH pump is on
+        }
+
+        // Check if it's time to stop taking action with the pH pump
+        if (!pumpOnPH && (millis - offTimerPH > configs->pump_off_interval_ph)){
+            takingActionPH = false; // Set flag to indicate that it's time to stop taking action with the pH pump
+        }
     }
 
-    // Check if it's time to stop taking action with the pH pump
-    if (!pumpOnPH && (millis - offTimerPH > configs->pump_off_interval_ph)){
-        takingActionPH = false; // Set flag to indicate that it's time to stop taking action with the pH pump
-    }
-
-    // Check if conductivity pump needs to be turned on
-    if (!pumpOnCond && takeActionCond && !takingActionCond){
-        setDosingStatusRegister(CONDUCTIVITY_PUMP_ON, 1);
-        pumpOnCond = true;
-        onTimerCond = millis; // Start timer to keep track of how long the pump has been on
-        takingActionCond = true; // Set flag to indicate that the pump is currently running
-        R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_PUMP, BSP_IO_LEVEL_HIGH); // Turn on the conductivity pump
-        R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_PUMP_ON_LED, BSP_IO_LEVEL_HIGH); // Turn on the LED indicating that the conductivity pump is on
-    }
-
-    // Check if conductivity pump needs to be turned off
-    if (pumpOnCond && (millis - onTimerCond > configs->pump_on_interval_cond)){
+    if(readDosingStatusRegister(CONDUCTIVITY_LOW_CUTOFF)|readDosingStatusRegister(CONDUCTIVITY_HIGH_CUTOFF))
+    {
         setDosingStatusRegister(CONDUCTIVITY_PUMP_ON, 0);
         pumpOnCond = false;
         offTimerCond = millis; // Start timer to keep track of how long the pump has been off
         R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_PUMP, BSP_IO_LEVEL_LOW); // Turn off the conductivity pump
-        R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_PUMP_ON_LED, BSP_IO_LEVEL_LOW); // Turn off the LED indicating that the conductivity pump is off
-    }
+        R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_PUMP_ON_LED, BSP_IO_LEVEL_LOW); // Turn off the LED indicating that the conductivity pump is on
+    }else
+    {
+        // Check if conductivity pump needs to be turned on
+        if (!pumpOnCond && takeActionCond && !takingActionCond){
+            setDosingStatusRegister(CONDUCTIVITY_PUMP_ON, 1);
+            pumpOnCond = true;
+            onTimerCond = millis; // Start timer to keep track of how long the pump has been on
+            takingActionCond = true; // Set flag to indicate that the pump is currently running
+            R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_PUMP, BSP_IO_LEVEL_HIGH); // Turn on the conductivity pump
+            R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_PUMP_ON_LED, BSP_IO_LEVEL_HIGH); // Turn on the LED indicating that the conductivity pump is on
+        }
 
-    // Check if it's time to stop taking action with the conductivity pump
-    if (!pumpOnCond && (millis - offTimerCond > configs->pump_off_interval_cond)){
-        takingActionCond = false; // Set flag to indicate that it's time to stop taking action with the conductivity pump
+        // Check if conductivity pump needs to be turned off
+        if (pumpOnCond && (millis - onTimerCond > configs->pump_on_interval_cond)){
+            setDosingStatusRegister(CONDUCTIVITY_PUMP_ON, 0);
+            pumpOnCond = false;
+            offTimerCond = millis; // Start timer to keep track of how long the pump has been off
+            R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_PUMP, BSP_IO_LEVEL_LOW); // Turn off the conductivity pump
+            R_IOPORT_PinWrite(&g_ioport_ctrl, DO_CONDUCTIVITY_PUMP_ON_LED, BSP_IO_LEVEL_LOW); // Turn off the LED indicating that the conductivity pump is on
+        }
+
+        // Check if it's time to stop taking action with the conductivity pump
+        if (!pumpOnCond && (millis - offTimerCond > configs->pump_off_interval_cond)){
+            takingActionCond = false; // Set flag to indicate that it's time to stop taking action with the conductivity pump
+        }
     }
 }
 
@@ -192,9 +212,20 @@ void setDosingStatusRegister(int n, int value) {
     if (value == 1) {
         input_registers[DOSING_STATUS_REGISTER] = (uint16_t) input_registers[DOSING_STATUS_REGISTER] | mask;
     } else {
-        input_registers[DOSING_STATUS_REGISTER] = (uint16_t) input_registers[DOSING_STATUS_REGISTER] & (~mask);
+        input_registers[DOSING_STATUS_REGISTER] = (uint16_t) input_registers[DOSING_STATUS_REGISTER] & (uint16_t) (~mask);
     }
     return;
 }
+
+int readDosingStatusRegister(int n) {
+    // Create a mask with the nth bit set to 1
+    uint16_t mask = 1 << n;
+
+    // Use bitwise AND to check the value of the nth bit in the register
+    // If the result is 0, the bit is 0. If the result is greater than 0, the bit is 1.
+    return (input_registers[DOSING_STATUS_REGISTER] & mask);
+
+}
+
 
 

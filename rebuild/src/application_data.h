@@ -12,9 +12,39 @@
 #include <stdbool.h>
 #include "hal_data.h"
 #include "control_utils.h"
+#include "modbus_protocol.h"
+
 
 #define M 1000000
 #define K 1000
+
+// Indices for the input registers
+#define DOSING_STATUS_REGISTER 0x00
+#define PH_READING_INDEX 0x01
+#define CONDUCTIVITY_READING_INDEX 0x02
+
+
+// Indices for the holding registers
+#define PH_SETPOINT_INDEX 0x00
+#define CONDUCTIVITY_SETPOINT_INDEX 0x01
+
+#define PH_LOW_WARNING_INDEX 0x02
+#define PH_HIGH_WARNING_INDEX 0x03
+#define PH_LOW_CUTOFF_INDEX 0x04
+#define PH_HIGH_CUTOFF_INDEX 0x05
+
+#define CONDUCTIVITY_LOW_WARNING_INDEX 0x06
+#define CONDUCTIVITY_HIGH_WARNING_INDEX 0x07
+#define CONDUCTIVITY_LOW_CUTOFF_INDEX 0x08
+#define CONDUCTIVITY_HIGH_CUTOFF_INDEX 0x09
+
+#define PH_HYSTERESIS_INDEX 0x0A
+#define CONDUCTIVITY_HYSTERESIS_INDEX 0x0B
+
+#define PH_PUMP_DUTY_CYCLE_INDEX 0x0C
+#define PH_PUMP_DOSING_PERIOD_INDEX 0x0D
+#define CONDUCTIVITY_PUMP_DUTY_CYCLE_INDEX 0x0E
+#define CONDUCTIVITY_PUMP_DOSING_PERIOD_INDEX 0x0F
 
 #define PH_READING_ADC 0x00
 #define CONDUCTIVITY_READING_ADC 0x01
@@ -24,6 +54,9 @@
 
 extern volatile uint64_t millis;
 extern volatile bool startup_complete;
+
+extern volatile uint16_t holding_registers[16];
+extern volatile uint16_t input_registers[3];
 
 struct AppConfig
 {
@@ -45,6 +78,7 @@ struct AppConfig
 };
 
 void configure_app(struct AppConfig*);
+void initialise_holding_registers(void);
 
 extern const uint16_t analog_sensor_high_threshold;
 extern const uint16_t analog_sensor_low_threshold;

@@ -12,6 +12,7 @@
 
 volatile bool g_char_interval_exceeded = false;
 volatile bool g_modbus_msg_rcvd = false;
+volatile bool g_new_configurations_rcvd = false;
 
 volatile uint8_t buffer[DATA_LENGTH]={RESET_VALUE};
 
@@ -20,9 +21,6 @@ volatile uint16_t g_length_msg = 0;
 
 volatile uint8_t modbus_rx_buffer[DATA_LENGTH]= {RESET_VALUE};
 volatile uint8_t modbus_tx_buffer[DATA_LENGTH] = {RESET_VALUE};
-
-volatile uint16_t holding_registers[2]={RESET_VALUE};
-volatile uint16_t input_registers[3]={RESET_VALUE};
 
 
 // This function is called when the modbus timer sends an interrupt
@@ -162,9 +160,7 @@ void handle_modbus_message()
        // Calculate the CRC of the received message from the contents of the message excluding
        // the received CRC (final two bytes of the message)
        volatile uint16_t crc = crc16((uint8_t*)modbus_rx_buffer, g_length_msg-2);
-       volatile uint16_t debug = modbus_rx_buffer[g_length_msg-1] << 8 | modbus_rx_buffer[g_length_msg-2];
 
-       volatile bool b_debug = crc == debug;
        // If the calculated CRC matches the received CRC
        if (crc == (modbus_rx_buffer[g_length_msg-1] << 8 | modbus_rx_buffer[g_length_msg-2]))
        {
@@ -182,6 +178,8 @@ void handle_modbus_message()
                        break;
                    case WRITE_HOLDING_REGISTERS:
                        write_holding_registers();
+                       g_new_configurations_rcvd = true;
+
                        break;
                    default:
                        // If the command is unsupported, return an exception message to the master device
@@ -284,7 +282,7 @@ void read_holding_registers()
     uint16_t end_address = (uint16_t)(start_address + num_registers - 1);
 
     // Check if the end address is within the allowed range (0-1)
-    if (end_address>1)
+    if (end_address>16)
     {
         // If not, send an exception response with ILLEGAL_DATA_ADDRESS error code (0x02)
         modbus_exception(ILLEGAL_DATA_ADDRESS, modbus_rx_buffer[1]);
@@ -328,7 +326,7 @@ void write_holding_registers()
     }
 
     uint16_t endAddr = startAddr + numRegs - 1;  // Calculate end address of register
-    if (endAddr > 4)  // Check if end address is within acceptable range
+    if (endAddr > 16)  // Check if end address is within acceptable range
     {
         // If not, send an exception response with ILLEGAL_DATA_ADDRESS error code (0x02)
         modbus_exception(ILLEGAL_DATA_ADDRESS, modbus_rx_buffer[1]);

@@ -38,10 +38,7 @@
 #define READ_INPUT_REGISTERS 0x04
 #define WRITE_HOLDING_REGISTERS 0x10
 
-// Indices for the holding registers
-#define DOSING_STATUS_REGISTER 0x00
-#define PH_READING_INDEX 0x01
-#define CONDUCTIVITY_READING_INDEX 0x02
+
 
 void read_input_registers();
 void read_holding_registers();
@@ -53,9 +50,9 @@ void reset_timer(uint16_t);
 void modbus_uart_cb(uart_callback_args_t *);
 void modbus_timer_cb(timer_callback_args_t*);
 
-extern volatile uint16_t holding_registers[2];
-extern volatile uint16_t input_registers[3];
+
 
 extern volatile bool g_modbus_msg_rcvd;
+extern volatile bool g_new_configurations_rcvd;
 
 #endif

@@ -34,6 +34,7 @@ void handle_pumps(struct AppConfig *);
 void turn_sensors_on();
 void turn_sensors_off();
 void setDosingStatusRegister(int , int);
+int readDosingStatusRegister(int);
 
 
 extern volatile bool sensors_on;
