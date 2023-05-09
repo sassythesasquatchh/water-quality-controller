@@ -67,13 +67,13 @@ void configure_app(struct AppConfig *configs)
     // Convert the conductivity setpoint to raw ADC value
     configs->conductivity_setpoint_raw = convert_cond_to_adc(conductivity_setpoint-conductivity_hysteresis);
     // Convert the conductivity low warning threshold to raw ADC value
-    configs->conductivity_low_warning_raw = convert_ph_to_adc(conductivity_low_warning-conductivity_hysteresis);
+    configs->conductivity_low_warning_raw = convert_cond_to_adc(conductivity_low_warning-conductivity_hysteresis);
     // Convert the conductivity high warning threshold to raw ADC value
-    configs->conductivity_high_warning_raw = convert_ph_to_adc(conductivity_high_warning-conductivity_hysteresis);
+    configs->conductivity_high_warning_raw = convert_cond_to_adc(conductivity_high_warning-conductivity_hysteresis);
     // Convert the conductivity low cutoff threshold to raw ADC value
-    configs->conductivity_low_cutoff_raw = convert_ph_to_adc(conductivity_low_cutoff-conductivity_hysteresis);
+    configs->conductivity_low_cutoff_raw = convert_cond_to_adc(conductivity_low_cutoff-conductivity_hysteresis);
     // Convert the conductivity high cutoff threshold to raw ADC value
-    configs->conductivity_high_cutoff_raw = convert_ph_to_adc(conductivity_high_cutoff-conductivity_hysteresis);
+    configs->conductivity_high_cutoff_raw = convert_cond_to_adc(conductivity_high_cutoff-conductivity_hysteresis);
 }
 
 
