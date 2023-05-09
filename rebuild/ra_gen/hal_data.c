@@ -331,9 +331,12 @@ const adc_window_cfg_t g_adc0_window_cfg =
 };
 #endif
 const adc_channel_cfg_t g_adc0_channel_cfg =
-{ .scan_mask = ADC_MASK_CHANNEL_17 | ADC_MASK_CHANNEL_20 | 0, .scan_mask_group_b = 0, .priority_group_a =
-          ADC_GROUP_A_PRIORITY_OFF,
-  .add_mask = 0, .sample_hold_mask = 0, .sample_hold_states = 24,
+{ .scan_mask = ADC_MASK_CHANNEL_17 | ADC_MASK_CHANNEL_18 | ADC_MASK_CHANNEL_20 | 0,
+  .scan_mask_group_b = 0,
+  .priority_group_a = ADC_GROUP_A_PRIORITY_OFF,
+  .add_mask = 0,
+  .sample_hold_mask = 0,
+  .sample_hold_states = 24,
 #if ((0) | (0))
     .p_window_cfg        = (adc_window_cfg_t *) &g_adc0_window_cfg,
 #else

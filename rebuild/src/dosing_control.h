@@ -29,7 +29,7 @@
 #define PH_PUMP_ON 0x0C
 #define CONDUCTIVITY_PUMP_ON 0x0D
 
-void read_sensors(struct AppConfig *, bool[]);
+void read_sensors(struct AppConfig *);
 void handle_pumps(struct AppConfig *);
 void turn_sensors_on();
 void turn_sensors_off();

@@ -16,5 +16,6 @@ void set_bcd_pins();
 void handle_hmi(uint16_t);
 void increment_digit();
 void num_to_digits(uint16_t);
+//void set_hmi_lights();
 
 #endif /* HMI_CONTROL_H_ */

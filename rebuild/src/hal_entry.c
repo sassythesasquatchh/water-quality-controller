@@ -101,7 +101,7 @@ void hal_entry(void)
         // FOR DEPLOYMENT REMOVE FIRSTPASS PARAMETER
         if ((millis - ADCTimer >= adc_scan_interval) || firstPass){
             // Call a function to read the sensors and update the configuration settings
-            read_sensors(&configs, (bool*)err_arr);
+            read_sensors(&configs);
 
             // Set the first pass flag to false
             firstPass = false;

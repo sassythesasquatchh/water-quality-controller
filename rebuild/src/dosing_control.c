@@ -30,7 +30,7 @@ static volatile uint64_t onTimerCond = 0; // Times the 'off-interval' for the co
 
 volatile bool sensors_on = false;
 
-void read_sensors(struct AppConfig *configs, bool err_arr[])
+void read_sensors(struct AppConfig *configs)
 {
     uint16_t ph_reading_adc = 0; // Initialize variable for storing pH sensor reading from ADC
     uint16_t conductivity_reading_adc = 0; // Initialize variable for storing conductivity sensor reading from ADC
@@ -88,6 +88,8 @@ void read_sensors(struct AppConfig *configs, bool err_arr[])
 
     // Check if supply voltage diagnostic reading is higher than the high threshold and set corresponding error flag
     setDosingStatusRegister(SUPPLY_VOLTAGE_HIGH, supply_voltage_diagnostic_reading >= analog_mains_high_threshold);
+
+
 
 
 //    // Check if pH reading is higher than the high warning threshold and set corresponding error flag
@@ -194,3 +196,5 @@ void setDosingStatusRegister(int n, int value) {
     }
     return;
 }
+
+
